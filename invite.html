@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wedding Invitation Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Jost:wght@200;300;400;500&family=Noto+Serif+Devanagari:wght@400;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Noto+Serif+Malayalam:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* One engine, four layouts. ?t= picks the theme: each theme has its own tokens AND its own section structure and CSS below. */
+:root {
+  --paper: #f7f1e6; --paper2: #efe5d2; --ink: #3b2c1c; --muted: #8a7757; --gold: #b88a3b;
+  --btn: #7b1e3a; --btnfg: #fff; --outer: #e6dcc8; --field: rgba(255,255,255,.55);
+  --serif: "Playfair Display", Georgia, serif; --sans: "Jost", system-ui, sans-serif;
+  --pattern: repeating-linear-gradient(45deg, rgba(184,138,59,.07) 0 2px, transparent 2px 14px);
+}
+[data-theme="royal"] { --paper: #4a0d1a; --paper2: #5d1124; --ink: #f6e7c1; --muted: #dcbf80; --gold: #e3b24d; --btn: #e3b24d; --btnfg: #3a0914; --outer: #2c0610; --field: rgba(255,255,255,.08); --serif: "Cormorant Garamond", "Playfair Display", serif;
+  --pattern: radial-gradient(circle at 50% 50%, transparent 0 9px, rgba(227,178,77,.22) 10px 11px, transparent 12px), radial-gradient(circle at 0 0, rgba(227,178,77,.16) 0 6px, transparent 7px); }
+[data-theme="starry"] { --paper: #0b1030; --paper2: #131a4a; --ink: #eef0ff; --muted: #a7acd6; --gold: #e8d28a; --btn: #e8d28a; --btnfg: #12163a; --outer: #060818; --field: rgba(255,255,255,.07); --serif: "Cormorant Garamond", serif;
+  --pattern: radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent), radial-gradient(1px 1px at 70% 20%, #fff, transparent), radial-gradient(1.5px 1.5px at 40% 75%, #fff, transparent), radial-gradient(1px 1px at 85% 60%, #fff, transparent), radial-gradient(1px 1px at 10% 85%, #fff, transparent); }
+[data-theme="minimal"] { --paper: #fbfbf8; --paper2: #f1f1ec; --ink: #1d1d1b; --muted: #77776f; --gold: #1d1d1b; --btn: #1d1d1b; --btnfg: #fff; --outer: #e4e4de; --field: transparent; --serif: "Jost", system-ui, sans-serif; --pattern: none; }
+
+[data-theme="seal"] { --paper: #f4efe6; --paper2: #e8dfcd; --ink: #33291f; --muted: #7f735f; --gold: #a98532; --btn: #33291f; --btnfg: #fff; --outer: #d9d0bf; --field: rgba(255,255,255,.6); --serif: "Cormorant Garamond", Georgia, serif; --pattern: none; }
+[data-theme="temple"] { --paper: #fbf1dc; --paper2: #f3e0b8; --ink: #3b1d12; --muted: #8a6a45; --gold: #b5782a; --btn: #8a1c1c; --btnfg: #fff; --outer: #e8d3a6; --field: rgba(255,255,255,.6); --serif: "Playfair Display", Georgia, serif; --pattern: none; }
+[data-theme="celestial"] { --paper: #070a12; --paper2: #101830; --ink: #eef0fb; --muted: #9aa3c4; --gold: #d8b765; --btn: #d8b765; --btnfg: #0a0e1c; --outer: #03040a; --field: rgba(255,255,255,.06); --serif: "Cormorant Garamond", serif;
+  --pattern: radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent), radial-gradient(1px 1px at 70% 20%, #fff, transparent), radial-gradient(1.5px 1.5px at 40% 75%, #fff, transparent), radial-gradient(1px 1px at 85% 60%, #fff, transparent), radial-gradient(1px 1px at 10% 85%, #fff, transparent); }
+[data-theme="kerala"] { --paper: #fbf7ea; --paper2: #f1e8cf; --ink: #1f3a2b; --muted: #6b7a5e; --gold: #bf9b3f; --btn: #1f5a3a; --btnfg: #fff; --outer: #dfd6b8; --field: rgba(255,255,255,.65); --serif: "Cormorant Garamond", Georgia, serif; --pattern: none; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--outer); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.6; }
+.app { max-width: 480px; margin: 0 auto; background: var(--paper); min-height: 100vh; position: relative; overflow-x: hidden; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; text-wrap: balance; }
+p { margin: 0 0 10px; } ul { padding: 0; margin: 0; list-style: none; } img { display: block; max-width: 100%; }
+.eyebrow { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+.hi { font-family: "Noto Serif Devanagari", serif; letter-spacing: 0; }
+section { padding: 56px 24px; text-align: center; }
+h2 { font-size: 32px; margin: 8px 0 28px; }
+.lead { font-family: var(--serif); font-style: italic; color: var(--muted); }
+.note { font-size: 13px; color: var(--muted); }
+.back { position: fixed; top: 12px; left: 12px; z-index: 60; background: var(--btn); color: var(--btnfg); font-size: 12px; letter-spacing: .1em; padding: 8px 14px; text-decoration: none; border-radius: 20px; }
+html.embed, html.embed body { overflow: hidden; }
+html.embed .back, html.embed .order, html.embed #mute { display: none !important; }
+.order { position: fixed; z-index: 60; bottom: 16px; left: 12px; background: #1faa59; color: #fff; padding: 12px 18px; border-radius: 28px; font-weight: 500; font-size: 14px; text-decoration: none; box-shadow: 0 4px 16px #0004; }
+a.btn, button.btn, .btn { font: inherit; font-weight: 500; letter-spacing: .12em; font-size: 13px; text-transform: uppercase; border: 1px solid var(--btn); padding: 14px 18px; cursor: pointer; background: var(--btn); color: var(--btnfg); text-decoration: none; display: block; text-align: center; }
+.btn.alt { background: transparent; color: var(--btn); }
+[data-theme="royal"] .btn.alt, [data-theme="starry"] .btn.alt, [data-theme="celestial"] .btn.alt { color: var(--gold); border-color: var(--gold); }
+.btn:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+form { display: grid; gap: 16px; text-align: left; }
+label { display: grid; gap: 6px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+input, select, textarea { font: inherit; font-size: 16px; font-weight: 300; letter-spacing: 0; text-transform: none; color: var(--ink); background: var(--field); border: 1px solid color-mix(in srgb, var(--gold) 65%, transparent); border-radius: 0; padding: 12px; width: 100%; min-width: 0; }
+option { color: #222; } .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.wish { text-align: left; border-bottom: 1px solid color-mix(in srgb, var(--gold) 28%, transparent); padding: 12px 0; } .wish b { font-family: var(--serif); font-weight: 600; }
+#wishes { margin-top: 20px; }
+.count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 24px; }
+.count b { display: block; font-family: var(--serif); font-weight: 400; font-size: 30px; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.count span { font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+.big-date { font-family: var(--serif); font-size: 24px; }
+.phimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* intro */
+#intro { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--outer); cursor: pointer; transition: opacity .6s .9s, visibility 0s 1.5s; }
+#intro .stage { position: relative; width: min(100%, 480px); height: 100%; overflow: hidden; background: var(--paper2); }
+.door { position: absolute; top: 0; bottom: 0; width: 50%; background: var(--pattern), var(--paper2); background-size: 28px 28px, 28px 28px; transition: transform 1.2s cubic-bezier(.7,0,.2,1); }
+[data-theme="royal"] .door::after { content: ""; position: absolute; inset: 9% 12% 9% 12%; border: 2px solid var(--gold); border-radius: 160px 160px 6px 6px; box-shadow: inset 0 0 0 6px var(--paper2), inset 0 0 0 7px var(--gold); background: radial-gradient(circle, var(--gold) 0 3px, transparent 4px) 0 0 / 24px 24px; opacity: .55; } [data-theme="royal"] .door.r::after { border-radius: 160px 160px 6px 6px; }
+[data-theme="floral"] .door { background: radial-gradient(circle at 70% 24%, #f2c4be 0 22px, transparent 23px), radial-gradient(circle at 30% 70%, #f7d6d1 0 30px, transparent 31px), radial-gradient(circle at 80% 85%, #efb8b1 0 18px, transparent 19px), repeating-linear-gradient(45deg, rgba(184,138,59,.08) 0 2px, transparent 2px 14px), var(--paper2); }
+.door.l { left: 0; border-right: 2px solid var(--gold); } .door.r { right: 0; border-left: 2px solid var(--gold); }
+.seal { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; transition: opacity .4s; }
+.seal .mono { font-family: var(--serif); font-size: 64px; line-height: 1; } .seal .mono i { color: var(--gold); font-size: .5em; padding-inline: 6px; }
+.seal .tap { margin-top: 18px; font-size: 11px; letter-spacing: .3em; color: var(--muted); animation: pulse 2s infinite; }
+.seal .rule { width: 60px; height: 1px; background: var(--gold); margin: 14px auto 0; } .seal .gan { color: var(--gold); font-size: 15px; margin-bottom: 18px; }
+@keyframes pulse { 50% { opacity: .35; } }
+#intro.open .door.l { transform: translateX(-100%); } #intro.open .door.r { transform: translateX(100%); }
+#intro.open .seal { opacity: 0; } #intro.open { opacity: 0; visibility: hidden; pointer-events: none; }
+[data-theme="starry"] .door { display: none; } [data-theme="starry"] #intro .stage { background: radial-gradient(circle at 50% 40%, #2a3480, #0b1030 70%), #0b1030; transition: transform 1.6s ease-in, opacity 1.2s ease-in .3s; } [data-theme="starry"] #intro .stage::before { content: ""; position: absolute; inset: 0; background: var(--pattern); background-size: 160px 160px; animation: tw 3s ease-in-out infinite alternate; } [data-theme="starry"] #intro.open .stage { transform: scale(2.6); opacity: 0; } [data-theme="starry"] #intro.open { transition-delay: 1.1s; } @keyframes tw { from { opacity: .3; } to { opacity: 1; } }
+[data-theme="starry"] .seal .mono { font-style: italic; text-shadow: 0 0 24px #7f8cffaa; }
+[data-theme="minimal"] .door.l { width: 100%; border: 0; background: var(--paper); } [data-theme="minimal"] .door.r { display: none; }
+[data-theme="minimal"] #intro.open .door.l { transform: translateY(-100%); }
+[data-theme="minimal"] .seal .mono { font-weight: 200; letter-spacing: .1em; font-size: 54px; }
+
+/* ============ FLORAL : classic centred, arch portrait, timeline ============ */
+[data-theme="floral"] section + section { border-top: 1px solid rgba(184,138,59,.25); }
+.f-hero { padding: 72px 24px 56px; text-align: center; background: linear-gradient(var(--paper2), var(--paper)); position: relative; }
+.f-hero h1 { font-size: clamp(46px, 13vw, 64px); line-height: 1.05; margin: 18px 0; } .f-hero h1 span { display: block; font-style: italic; color: var(--gold); font-size: .45em; margin: 6px 0; }
+.f-hero .photo { aspect-ratio: 4/5; width: 78%; margin: 28px auto 0; border-radius: 200px 200px 6px 6px; border: 1px solid var(--gold); padding: 8px; }
+.f-hero .photo div { width: 100%; height: 100%; border-radius: 192px 192px 2px 2px; overflow: hidden; position: relative; }
+.f-sprig { width: 140px; margin: 0 auto 10px; display: block; }
+.people { display: grid; gap: 28px; } .person .badge { width: 64px; height: 64px; margin: 0 auto 10px; border: 1px solid var(--gold); border-radius: 50%; display: grid; place-items: center; font-family: var(--serif); font-size: 26px; color: var(--gold); }
+.person h3 { font-size: 26px; } .person small { color: var(--muted); display: block; max-width: 260px; margin: 6px auto 0; }
+.quote { margin-top: 36px; font-family: var(--serif); font-style: italic; color: var(--muted); }
+.timeline { position: relative; text-align: left; padding-left: 28px; } .timeline::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: var(--gold); }
+.timeline li { position: relative; padding-bottom: 28px; } .timeline li::before { content: ""; position: absolute; left: -28px; top: 7px; width: 11px; height: 11px; background: var(--paper); border: 1px solid var(--gold); border-radius: 50%; }
+.timeline b { font-family: var(--serif); font-weight: 600; font-size: 19px; display: block; } .timeline em { font-style: normal; color: var(--gold); font-size: 12px; letter-spacing: .2em; } .timeline p { color: var(--muted); font-size: 15px; margin-top: 4px; }
+[data-theme="floral"] .count div { border: 1px solid rgba(184,138,59,.5); padding: 14px 0 10px; }
+.event { border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent); padding: 28px 20px; margin-bottom: 20px; background: color-mix(in srgb, var(--paper2) 55%, transparent); }
+.event h3 { font-size: 28px; margin: 8px 0 4px; } .event .day { color: var(--muted); font-size: 13px; letter-spacing: .1em; } .event .time { color: var(--gold); letter-spacing: .12em; font-size: 14px; }
+.event .where { margin-top: 12px; } .event .where small { color: var(--muted); display: block; }
+.masonry { column-count: 2; column-gap: 8px; } .masonry > div { break-inside: avoid; margin-bottom: 8px; position: relative; overflow: hidden; aspect-ratio: var(--ar); }
+[data-theme="floral"] .footer { padding: 56px 24px 110px; text-align: center; background: var(--paper2); }
+
+/* ============ ROYAL : Indian, jharokha arch, pillars, scroll-snap gallery ============ */
+.r-garland { height: 26px; background: radial-gradient(circle at 13px 13px, #f39c12 0 9px, transparent 10px), radial-gradient(circle at 39px 13px, #ffcf5a 0 9px, transparent 10px); background-size: 52px 26px; }
+.r-hero { padding: 36px 24px 48px; text-align: center; background: var(--pattern), linear-gradient(#5d1124, var(--paper)); background-size: 34px 34px, auto; }
+.r-hero .gan { color: var(--gold); font-size: 17px; margin-bottom: 8px; }
+.jharokha { width: 78%; margin: 22px auto 26px; padding: 10px; border: 2px solid var(--gold); border-radius: 220px 220px 0 0; position: relative; background: var(--paper); box-shadow: 0 0 0 6px var(--paper), 0 0 0 7px var(--gold); }
+.jharokha div { aspect-ratio: 4/5; border-radius: 210px 210px 0 0; overflow: hidden; position: relative; border: 1px solid var(--gold); }
+.r-hero h1 { font-size: clamp(52px, 15vw, 76px); line-height: 1; color: var(--gold); font-weight: 500; } .r-hero h1 small { -webkit-text-fill-color: var(--ink); }
+.r-hero h1 small { display: block; font-size: 18px; color: var(--ink); letter-spacing: .3em; margin: 8px 0; font-weight: 400; }
+.r-date { margin: 22px auto 0; display: inline-grid; grid-template-columns: auto auto auto; align-items: center; gap: 18px; border-block: 1px solid var(--gold); padding: 10px 22px; }
+.r-date b { font-family: var(--serif); font-size: 52px; font-weight: 500; color: var(--gold); line-height: 1; } .r-date span { font-size: 12px; letter-spacing: .25em; text-align: left; }
+.r-title { display: grid; justify-items: center; gap: 6px; } .r-title .hi { color: var(--gold); font-size: 20px; } .r-title h2 { margin: 0 0 24px; font-size: 38px; }
+.r-fam { display: grid; gap: 22px; }
+.r-card { border: 1px solid var(--gold); border-radius: 120px 120px 6px 6px; padding: 40px 22px 26px; position: relative; background: linear-gradient(var(--paper2), transparent); }
+.r-card .hi { color: var(--gold); font-size: 15px; } .r-card h3 { font-size: 30px; margin: 6px 0; color: var(--ink); } .r-card small { color: var(--muted); display: block; max-width: 240px; margin-inline: auto; }
+.r-med { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 22px; }
+.r-med div { aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--gold); display: grid; place-content: center; position: relative; box-shadow: inset 0 0 0 4px var(--paper), inset 0 0 0 5px color-mix(in srgb, var(--gold) 50%, transparent); }
+.r-med b { font-family: var(--serif); font-size: 26px; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; } .r-med span { font-size: 8px; letter-spacing: .15em; color: var(--muted); }
+.r-ev { border: 1px solid var(--gold); margin-bottom: 18px; text-align: center; background: var(--paper); }
+.r-ev .hd { background: var(--gold); color: #3a0914; padding: 12px; } .r-ev .hd .hi { font-size: 22px; font-weight: 600; display: block; line-height: 1.3; } .r-ev .hd small { letter-spacing: .3em; font-size: 10px; text-transform: uppercase; }
+.r-ev .bd { padding: 22px 18px 24px; } .r-ev .day { font-family: var(--serif); font-size: 20px; } .r-ev .time { color: var(--gold); letter-spacing: .14em; font-size: 14px; margin: 2px 0 12px; } .r-ev .bd small { color: var(--muted); display: block; margin-bottom: 14px; }
+.r-gal > div { border: 1px solid var(--gold); border-radius: 80px 80px 0 0; }
+.r-gal > div:nth-child(even) { border-radius: 0 0 80px 80px; }
+.r-foot { padding: 56px 24px 110px; text-align: center; background: var(--pattern), #3a0914; background-size: 34px 34px, auto; } .r-foot .hi { color: var(--gold); font-size: 20px; display: block; margin-bottom: 10px; }
+
+/* ============ STARRY : photo-led cinematic, glow, glass cards, constellation ============ */
+.s-hero { position: relative; aspect-ratio: 4/5.4; overflow: hidden; }
+.s-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 35%, var(--paper) 96%), linear-gradient(#0b103099, transparent 30%); }
+.s-hero .twinkle { position: absolute; inset: 0; z-index: 2; background: var(--pattern); background-size: 240px 240px; animation: tw 4s ease-in-out infinite alternate; }
+@keyframes tw { from { opacity: .35; } to { opacity: 1; } }
+.s-hero .txt { position: absolute; z-index: 3; left: 0; right: 0; bottom: 18px; text-align: center; padding-inline: 20px; }
+.s-hero h1 { font-size: clamp(52px, 15vw, 76px); font-style: italic; font-weight: 400; line-height: .95; text-shadow: 0 0 40px #7f8cffaa; } .s-hero h1 span { display: block; font-size: .4em; color: var(--gold); letter-spacing: .2em; }
+.pill { display: inline-block; margin-top: 16px; border: 1px solid color-mix(in srgb, var(--gold) 70%, transparent); padding: 8px 18px; border-radius: 40px; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; background: #0b103080; backdrop-filter: blur(6px); }
+[data-theme="starry"] section { background: transparent; position: relative; }
+.s-quote { font-family: var(--serif); font-style: italic; font-size: 24px; line-height: 1.4; max-width: 340px; margin: 0 auto; }
+.constel { position: relative; text-align: left; }
+.constel::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(transparent, var(--gold), transparent); }
+.constel li { position: relative; width: 50%; padding: 0 22px 34px 0; text-align: right; }
+.constel li:nth-child(even) { margin-left: 50%; padding: 0 0 34px 22px; text-align: left; }
+.constel li::after { content: "\2726"; position: absolute; right: -9px; top: -2px; color: var(--gold); font-size: 16px; text-shadow: 0 0 12px var(--gold); background: var(--paper); line-height: 1; }
+.constel li:nth-child(even)::after { right: auto; left: -9px; }
+.constel em { font-style: normal; color: var(--gold); font-size: 12px; letter-spacing: .2em; } .constel b { font-family: var(--serif); font-size: 21px; font-weight: 500; display: block; } .constel p { font-size: 13px; color: var(--muted); }
+.s-ring { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 24px; }
+.s-ring div { aspect-ratio: 1; border-radius: 50%; display: grid; place-content: center; background: radial-gradient(circle, #7f8cff22, transparent 70%); border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent); box-shadow: 0 0 22px #7f8cff44; }
+.s-ring b { font-family: var(--serif); font-size: 28px; font-weight: 400; font-variant-numeric: tabular-nums; line-height: 1; } .s-ring span { font-size: 8px; letter-spacing: .18em; color: var(--muted); }
+.glass { border: 1px solid #ffffff2a; background: linear-gradient(135deg, #ffffff14, #ffffff05); backdrop-filter: blur(8px); border-radius: 18px; padding: 26px 20px; margin-bottom: 16px; box-shadow: 0 8px 30px #0006; }
+.glass h3 { font-size: 30px; font-style: italic; margin: 4px 0; } .glass .time { font-family: var(--serif); font-size: 34px; color: var(--gold); } .glass small { color: var(--muted); display: block; margin-bottom: 14px; }
+.polaroids { column-gap: 14px; padding-inline: 4px; }
+.polaroids > div { background: #f4f2ec; padding: 8px; margin-bottom: 16px; box-shadow: 0 8px 24px #0008; transform: rotate(-2deg); aspect-ratio: auto; overflow: visible; } .polaroids > div:nth-child(even) { transform: rotate(2deg); } .polaroids > div > span { display: block; aspect-ratio: var(--ar); position: relative; overflow: hidden; }
+
+.s-foot { padding: 56px 24px 110px; text-align: center; background: linear-gradient(transparent, #060818); } .moon { font-size: 34px; color: var(--gold); text-shadow: 0 0 20px var(--gold); }
+
+/* ============ MINIMAL : editorial, left aligned, big thin type, hairline rows ============ */
+[data-theme="minimal"] section { text-align: left; padding: 48px 24px; border-top: 1px solid #1d1d1b22; }
+[data-theme="minimal"] h2 { font-weight: 300; font-size: 14px; letter-spacing: .3em; text-transform: uppercase; margin: 0 0 24px; }
+.m-top { display: flex; justify-content: space-between; padding: 20px 24px; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; }
+.m-names { padding: 28px 24px 24px; } .m-names h1 { font-size: clamp(60px, 20vw, 96px); font-weight: 200; line-height: .92; letter-spacing: -.03em; text-transform: uppercase; } .m-names h1 span { display: block; font-size: .3em; letter-spacing: .3em; font-weight: 300; margin: 10px 0; }
+.m-photo { aspect-ratio: 4/5; position: relative; overflow: hidden; }
+.m-info { padding: 8px 24px 32px; } .m-info div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid #1d1d1b22; font-size: 15px; } .m-info b { font-weight: 400; font-size: 11px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.m-row { display: grid; grid-template-columns: 112px 1fr; gap: 16px; padding: 22px 0; border-bottom: 1px solid #1d1d1b22; align-items: start; } .m-row:first-of-type { border-top: 1px solid #1d1d1b22; }
+.m-row .t { font-size: 34px; font-weight: 200; line-height: 1; letter-spacing: -.02em; } .m-row .t small { display: block; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-top: 8px; font-weight: 400; }
+.m-row h3 { font-size: 20px; font-weight: 400; } .m-row p { font-size: 14px; color: var(--muted); margin: 2px 0 8px; } .m-row a { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink); }
+.m-year { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 12px 0; } .m-year b { font-weight: 200; font-size: 24px; } .m-year p { margin: 0; font-size: 14px; color: var(--muted); } .m-year strong { font-weight: 400; display: block; color: var(--ink); font-size: 15px; }
+.m-count { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid #1d1d1b22; } .m-count div { padding: 18px 0; } .m-count b { display: block; font-size: 40px; font-weight: 200; line-height: 1; font-variant-numeric: tabular-nums; } .m-count span { font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+.m-gal { column-gap: 2px; } .m-gal > div { margin-bottom: 2px; }
+[data-theme="minimal"] input, [data-theme="minimal"] select, [data-theme="minimal"] textarea { border: 0; border-bottom: 1px solid #1d1d1b; padding-inline: 0; }
+[data-theme="minimal"] .btn { border-radius: 0; }
+.m-foot { padding: 48px 24px 110px; border-top: 1px solid #1d1d1b22; } .m-foot h2 { font-size: 64px !important; font-weight: 200 !important; letter-spacing: -.03em !important; text-transform: uppercase; line-height: 1; margin: 0 0 14px !important; }
+
+/* ============ SEAL : classic royal. Wax-seal envelope, laurel monogram, oval portrait, scratch-to-reveal date ============ */
+[data-theme="seal"] .stage { background: #cfc3b0; perspective: 900px; }
+.env-paper { position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, #d9cebb, #c3b6a1); }
+.env-paper svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
+.env-flap { position: absolute; left: 0; right: 0; top: 0; height: 56%; background: linear-gradient(#d6cab6, #cbbea8); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top; transition: transform 1s cubic-bezier(.6,0,.2,1) .25s; filter: drop-shadow(0 6px 8px #0004); }
+.wax { position: absolute; left: 50%; top: 56%; translate: -50% -50%; width: 104px; height: 104px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #e9c96a, #a98532 65%, #7d6120); box-shadow: 0 6px 18px #0006, inset 0 0 0 5px #c9a447, inset 0 0 0 7px #8a6a22; display: grid; place-content: center; text-align: center; font-family: var(--serif); font-size: 30px; color: #5b4411; transition: transform .5s, opacity .5s; z-index: 3; }
+.wax i { font-size: .55em; padding-inline: 3px; }
+.q-tap { position: absolute; left: 0; right: 0; bottom: 14%; text-align: center; font-size: 11px; letter-spacing: .3em; color: #5d5240; animation: pulse 2s infinite; }
+#intro.open .env-flap { transform: rotateX(180deg); } #intro.open .wax { transform: scale(1.5); opacity: 0; } #intro.open .q-tap { opacity: 0; }
+[data-theme="seal"] #intro .stage { transition: transform 1s ease-in .9s; } [data-theme="seal"] #intro.open .stage { transform: translateY(105%); }
+[data-theme="seal"] #intro { transition: opacity .3s 1.9s, visibility 0s 2.2s; }
+.q-hero { text-align: center; padding: 56px 24px 40px; }
+.q-mono { width: 96px; height: 96px; margin: 0 auto 20px; border-radius: 50%; border: 1px solid var(--gold); box-shadow: 0 0 0 5px var(--paper), 0 0 0 6px var(--gold); display: grid; grid-auto-flow: column; place-content: center; gap: 4px; font-family: var(--serif); font-size: 34px; align-items: center; } .q-mono i { color: var(--gold); font-size: .6em; }
+.q-hero h1 { font-size: clamp(56px, 16vw, 78px); font-style: italic; line-height: .95; margin: 14px 0; } .q-hero h1 em { display: block; font-size: .42em; margin: 4px 0; }
+.q-oval { width: 66%; aspect-ratio: 3/4; margin: 28px auto 0; border-radius: 50%; padding: 10px; border: 1px solid var(--gold); box-shadow: 0 0 0 6px var(--paper), 0 0 0 7px var(--gold); } .q-oval div { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; position: relative; }
+[data-theme="seal"] section { border-top: 1px solid color-mix(in srgb, var(--gold) 35%, transparent); }
+[data-theme="seal"] h2 { font-size: 36px; font-style: italic; }
+.q-pair { display: grid; gap: 22px; } .q-pair div { padding: 18px 0; border-block: 1px solid color-mix(in srgb, var(--gold) 45%, transparent); } .q-pair h3 { font-size: 30px; font-style: italic; } .q-pair small { color: var(--muted); display: block; margin-top: 4px; }
+.q-st { display: grid; gap: 14px; text-align: left; } .q-st div { display: grid; grid-template-columns: 54px 1fr; gap: 14px; align-items: start; padding: 16px; border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent); background: color-mix(in srgb, var(--paper2) 50%, transparent); }
+.q-st b { font-family: var(--serif); font-size: 30px; color: var(--gold); font-weight: 500; line-height: 1; } .q-st strong { font-family: var(--serif); font-size: 21px; font-weight: 600; display: block; } .q-st em { font-style: normal; font-size: 11px; letter-spacing: .2em; color: var(--gold); } .q-st p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+.scratch { position: relative; height: 128px; margin: 6px auto 4px; border: 1px solid var(--gold); display: grid; place-content: center; } .scratch .dt { font-family: var(--serif); font-size: 30px; font-style: italic; line-height: 1.2; } .scratch .dt small { display: block; font-size: 11px; font-style: normal; letter-spacing: .3em; color: var(--gold); }
+.scratch canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; transition: opacity .7s; }
+.q-count { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 22px; border-block: 1px solid var(--gold); } .q-count div { padding: 14px 0; } .q-count b { font-family: var(--serif); font-size: 34px; font-weight: 500; display: block; line-height: 1; font-variant-numeric: tabular-nums; } .q-count span { font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+.q-ev { position: relative; padding: 30px 22px; margin-bottom: 18px; } .q-ev::before, .q-ev::after { content: ""; position: absolute; width: 26px; height: 26px; border: 2px solid var(--gold); } .q-ev::before { left: 0; top: 0; border-right: 0; border-bottom: 0; } .q-ev::after { right: 0; bottom: 0; border-left: 0; border-top: 0; }
+.q-ev h3 { font-size: 30px; font-style: italic; margin: 6px 0; } .q-ev .time { color: var(--gold); letter-spacing: .14em; font-size: 14px; } .q-ev small { color: var(--muted); display: block; margin: 8px 0 14px; }
+[data-theme="seal"] .masonry > div { border: 1px solid var(--gold); padding: 5px; background: var(--paper); } [data-theme="seal"] .masonry > div img { position: absolute; inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px); }
+.q-foot { text-align: center; padding: 56px 24px 110px; background: var(--paper2); } .q-foot .wax { position: static; translate: none; margin: 0 auto 18px; width: 76px; height: 76px; font-size: 22px; }
+
+/* ============ TEMPLE : South Indian gopuram scene, sacred ring gates, lotus accents, registry ============ */
+.t-intro { position: absolute; inset: 0; background: url(photos/temple-scene.svg) center 62% / cover no-repeat; transform-origin: 50% 74%; transition: transform 1.8s cubic-bezier(.6,0,.9,.4), opacity 1.4s ease-in .4s; }
+.t-intro::after { content: ""; position: absolute; inset: 0; background: linear-gradient(#2a0e07aa, transparent 45%); }
+.t-name { position: absolute; z-index: 2; top: 9%; left: 0; right: 0; text-align: center; color: #fff1cf; text-shadow: 0 2px 12px #0008; } .t-name .mono { font-family: var(--serif); font-size: 58px; line-height: 1; } .t-name .mono i { color: #ffd36a; font-size: .5em; padding-inline: 6px; } .t-name .hi { color: #ffd36a; font-size: 15px; display: block; margin-bottom: 8px; }
+.om { position: absolute; z-index: 2; left: 50%; top: 56%; translate: -50% -50%; width: 78px; height: 78px; border-radius: 50%; border: 2px solid #ffd36a; display: grid; place-content: center; font-family: "Noto Serif Devanagari", serif; font-size: 34px; color: #ffd36a; background: #5a1c1066; box-shadow: 0 0 0 8px #ffd36a33, 0 0 30px #ffd36a99; animation: glow 2s infinite; }
+@keyframes glow { 50% { box-shadow: 0 0 0 16px #ffd36a11, 0 0 44px #ffd36acc; } }
+.t-tap { position: absolute; z-index: 2; left: 0; right: 0; top: calc(56% + 58px); text-align: center; font-size: 11px; letter-spacing: .3em; color: #fff1cf; text-shadow: 0 1px 6px #000a; }
+#intro.open .t-intro { transform: scale(3.4); opacity: 0; } [data-theme="temple"] #intro { transition: opacity .4s 1.7s, visibility 0s 2.1s; } [data-theme="temple"] .stage { background: #2a0e07; }
+.t-hero { text-align: center; } .t-banner { height: 280px; background: url(photos/temple-scene.svg) center 52% / cover; position: relative; } .t-banner::after { content: ""; position: absolute; inset: auto 0 0; height: 90px; background: linear-gradient(transparent, var(--paper)); }
+.t-hero .in { padding: 0 24px 48px; margin-top: -30px; position: relative; z-index: 2; } .t-hero h1 { font-size: clamp(46px, 13vw, 64px); line-height: 1.05; color: var(--btn); margin: 14px 0 8px; } .t-hero h1 span { display: block; color: var(--gold); font-size: .4em; font-style: italic; }
+.t-hero .photo { aspect-ratio: 4/5; width: 72%; margin: 24px auto 0; border-radius: 160px 160px 8px 8px; padding: 7px; border: 2px solid var(--gold); } .t-hero .photo div { width: 100%; height: 100%; border-radius: 152px 152px 3px 3px; overflow: hidden; position: relative; }
+.t-lotus { color: var(--gold); letter-spacing: .5em; font-size: 18px; }
+[data-theme="temple"] section { border-top: 1px solid color-mix(in srgb, var(--gold) 35%, transparent); } [data-theme="temple"] h2 { color: var(--btn); }
+.t-card { border: 1px solid var(--gold); background: linear-gradient(var(--paper2), transparent); padding: 24px 18px; margin-bottom: 16px; position: relative; } .t-card .sub { font-family: var(--serif); font-style: italic; color: var(--gold); font-size: 15px; } .t-card h3 { font-size: 28px; margin: 4px 0; color: var(--btn); } .t-card small { color: var(--muted); display: block; }
+.t-line { position: relative; text-align: left; padding-left: 34px; } .t-line::before { content: ""; position: absolute; left: 9px; top: 6px; bottom: 10px; width: 2px; background: repeating-linear-gradient(var(--gold) 0 6px, transparent 6px 12px); }
+.t-line li { position: relative; padding-bottom: 26px; } .t-line li::before { content: "\2740"; position: absolute; left: -34px; top: -2px; color: var(--btn); font-size: 20px; background: var(--paper); line-height: 1.2; }
+.t-line em { font-style: normal; color: var(--gold); letter-spacing: .2em; font-size: 12px; } .t-line b { display: block; font-family: var(--serif); font-size: 20px; color: var(--btn); } .t-line p { color: var(--muted); font-size: 14px; margin: 2px 0 0; }
+.gates { position: relative; height: 230px; margin-top: 22px; perspective: 900px; overflow: hidden; border: 2px solid var(--gold); background: var(--paper2); }
+.gates-in { position: absolute; inset: 0; display: grid; place-content: center; padding: 14px; } .gates-in .big-date { font-size: 19px; margin-bottom: 8px; }
+.gate { position: absolute; top: 0; bottom: 0; width: 50%; background: repeating-linear-gradient(90deg, #7a3414 0 14px, #8a3f1a 14px 16px), #7a3414; z-index: 2; transition: transform 1.4s cubic-bezier(.5,0,.2,1); box-shadow: inset 0 0 0 6px #d99a2b; }
+.gate::before { content: ""; position: absolute; inset: 14px; background: radial-gradient(circle, #ffd36a 0 3px, transparent 4px) 0 0 / 26px 26px; opacity: .8; }
+.gate.l { left: 0; transform-origin: 0 50%; } .gate.r { right: 0; transform-origin: 100% 50%; }
+.gates.open .gate.l { transform: rotateY(-108deg); } .gates.open .gate.r { transform: rotateY(108deg); } .gates.open .om2 { opacity: 0; pointer-events: none; }
+.om2 { position: absolute; z-index: 3; left: 50%; top: 50%; translate: -50% -50%; width: 74px; height: 74px; border-radius: 50%; border: 2px solid #ffd36a; background: #5a1c10; color: #ffd36a; font-family: "Noto Serif Devanagari", serif; font-size: 30px; cursor: pointer; animation: glow 2s infinite; transition: opacity .5s; padding: 0; }
+.t-count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; } .t-count div { background: #fff8; border: 1px solid var(--gold); padding: 8px 0; } .t-count b { font-family: var(--serif); font-size: 26px; font-weight: 400; display: block; line-height: 1.1; color: var(--btn); }
+.t-ev { display: grid; grid-template-columns: 8px 1fr; text-align: left; margin-bottom: 14px; border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent); background: #fff6; } .t-ev > i { background: var(--btn); } .t-ev:nth-child(3n+3) > i { background: #1f6f6b; } .t-ev:nth-child(3n+4) > i { background: var(--gold); }
+.t-ev div { padding: 20px 18px; } .t-ev h3 { font-size: 24px; color: var(--btn); margin: 4px 0; } .t-ev .time { color: var(--gold); letter-spacing: .12em; font-size: 14px; } .t-ev small { display: block; color: var(--muted); margin: 6px 0 12px; }
+.reg { border: 2px dashed var(--gold); padding: 24px 18px; background: #fff6; } .reg p { color: var(--muted); font-size: 15px; } .reg .btn { margin-top: 10px; }
+[data-theme="temple"] .masonry > div { border-radius: 10px; border: 2px solid var(--gold); }
+.t-foot { text-align: center; padding: 48px 24px 110px; background: linear-gradient(var(--paper2), #e9c98a); } .t-foot h2 { margin-bottom: 8px; }
+
+/* ============ CELESTIAL : night envelope, moon-hold date, timed schedule, dress code palette ============ */
+[data-theme="celestial"] .app { background: var(--pattern), radial-gradient(70% 40% at 50% 0%, #1b2a5c55, transparent), var(--paper); background-size: 260px 260px, auto, auto; }
+[data-theme="celestial"] .stage { background: #04060d var(--pattern); background-size: 260px 260px; display: grid; place-content: center; text-align: center; justify-items: center; }
+.c-title { font-size: 11px; letter-spacing: .38em; color: var(--gold); margin-bottom: 8px; } .c-script { font-family: "Great Vibes", cursive; font-size: 54px; color: #f0d890; line-height: 1.1; margin-bottom: 28px; text-shadow: 0 0 24px #d8b76566; }
+.env { position: relative; width: 252px; height: 168px; background: linear-gradient(135deg, transparent 49.7%, #d8b76566 50%, transparent 50.4%), linear-gradient(45deg, transparent 49.7%, #d8b76566 50%, transparent 50.4%), #0f1a38; border: 1px solid #d8b76577; box-shadow: 0 20px 50px #000a; perspective: 800px; }
+.env .fl { position: absolute; left: -1px; right: -1px; top: -1px; height: 62%; background: #16224a; clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top; transition: transform .9s cubic-bezier(.6,0,.2,1); border-top: 1px solid #d8b765; }
+.env .moonseal { position: absolute; left: 50%; top: 58%; translate: -50% -50%; width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff1b8, #d8b765 70%); display: grid; place-content: center; text-align: center; font-family: var(--serif); font-weight: 600; font-size: 14px; color: #3b2d0a; z-index: 3; box-shadow: 0 0 24px #d8b76599; transition: opacity .4s, transform .5s; }
+#intro.open .env .fl { transform: rotateX(180deg); } #intro.open .moonseal { opacity: 0; transform: scale(1.8); translate: -50% -50%; }
+.c-tap { margin-top: 28px; border: 1px solid #d8b76566; border-radius: 30px; padding: 10px 22px; font-size: 11px; letter-spacing: .3em; color: var(--gold); animation: pulse 2s infinite; }
+[data-theme="celestial"] #intro { transition: opacity .8s 1.3s, visibility 0s 2.1s; } [data-theme="celestial"] section { background: transparent; }
+.c-hero { text-align: center; padding: 60px 24px 36px; } .c-moon { width: 90px; height: 90px; margin: 0 auto 14px; filter: drop-shadow(0 0 22px #d8b765aa); }
+.c-hero .names { font-family: "Great Vibes", cursive; font-size: clamp(64px, 20vw, 92px); line-height: .95; color: #f0d890; text-shadow: 0 0 36px #d8b76577; margin: 14px 0 8px; } .c-hero .names span { display: block; font-size: .4em; -webkit-text-fill-color: var(--ink); color: var(--ink); font-family: var(--serif); letter-spacing: .3em; }
+.c-med { width: 148px; aspect-ratio: 1; border-radius: 50%; margin: 24px auto 0; border: 1px solid var(--gold); padding: 6px; box-shadow: 0 0 40px #d8b76544; } .c-med div { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; position: relative; }
+.c-letter { font-family: var(--serif); font-style: italic; font-size: 21px; line-height: 1.55; max-width: 360px; margin-inline: auto; color: #dfe3f7; } .c-letter b { display: block; font-style: normal; font-size: 12px; letter-spacing: .3em; color: var(--gold); margin-bottom: 12px; font-weight: 500; }
+.c-count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 22px; } .c-count div { border: 1px solid #d8b76555; padding: 14px 0 8px; border-radius: 6px; background: #ffffff08; } .c-count b { font-family: var(--serif); font-size: 32px; font-weight: 400; display: block; line-height: 1; font-variant-numeric: tabular-nums; } .c-count span { font-size: 9px; letter-spacing: .2em; color: var(--muted); }
+.moonbtn { --p: 0deg; display: block; width: 116px; height: 116px; margin: 28px auto 12px; border-radius: 50%; background: conic-gradient(var(--gold) var(--p), #ffffff1a 0); border: 0; padding: 5px; cursor: pointer; touch-action: none; user-select: none; } .moonbtn span { display: grid; place-content: center; width: 100%; height: 100%; border-radius: 50%; background: #0b1126; font-size: 46px; color: #f0d890; text-shadow: 0 0 18px #d8b765; }
+.moondate { font-family: var(--serif); font-size: 26px; color: #f0d890; opacity: 0; transition: opacity 1s; min-height: 34px; } .moondate.show { opacity: 1; } .moonhint { font-size: 10px; letter-spacing: .3em; color: var(--muted); }
+.c-ev { display: grid; grid-template-columns: 74px 1fr; gap: 16px; text-align: left; padding: 22px 0; border-bottom: 1px solid #d8b76530; } .c-ev:first-of-type { border-top: 1px solid #d8b76530; }
+.c-ev .t { font-family: var(--serif); font-size: 26px; color: var(--gold); line-height: 1.1; } .c-ev .t small { display: block; font-size: 10px; letter-spacing: .2em; color: var(--muted); font-family: var(--sans); }
+.c-ev h3 { font-size: 24px; font-style: italic; } .c-ev .gl { color: var(--gold); font-size: 12px; letter-spacing: .3em; margin: 2px 0; } .c-ev .pl { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); } .c-ev p { color: var(--muted); font-size: 14px; margin: 4px 0 0; }
+.c-card { border: 1px solid #d8b76555; border-radius: 12px; padding: 28px 20px; background: linear-gradient(#ffffff0c, #ffffff04); } .c-card h3 { font-size: 30px; font-style: italic; margin: 6px 0; } .c-card p { color: var(--muted); font-size: 15px; } .c-card .btn { margin-top: 14px; }
+.swatch { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 22px; } .swatch div { text-align: center; font-size: 9px; letter-spacing: .15em; color: var(--muted); width: 56px; } .swatch i { display: block; width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 6px; border: 1px solid #ffffff44; }
+.dc { display: grid; gap: 14px; text-align: left; } .dc div { border-top: 1px solid #d8b76540; padding-top: 12px; } .dc b { font-size: 11px; letter-spacing: .25em; color: var(--gold); font-weight: 500; display: block; } .dc p { font-size: 14px; color: var(--muted); margin: 4px 0 0; }
+.c-foot { text-align: center; padding: 56px 24px 110px; } .c-foot .names { font-family: "Great Vibes", cursive; font-size: 54px; color: #f0d890; line-height: 1.1; }
+/* ============ KERALA : kasavu borders, nilavilakku lamp lighting, backwaters banner, Malayalam accents ============ */
+.ml { font-family: "Noto Serif Malayalam", serif; letter-spacing: 0; }
+.kas { height: 22px; background: linear-gradient(var(--gold), var(--gold)) 0 3px / 100% 2px no-repeat, linear-gradient(var(--gold), var(--gold)) 0 17px / 100% 2px no-repeat, repeating-linear-gradient(90deg, var(--gold) 0 8px, transparent 8px 14px) 0 8px / 100% 6px no-repeat; }
+[data-theme="kerala"] .stage { background: radial-gradient(circle at 50% 55%, #fff3c9, #fbf6e8 60%); display: grid; place-content: center; justify-items: center; text-align: center; }
+[data-theme="kerala"] .stage .kas { position: absolute; left: 0; right: 0; } [data-theme="kerala"] .stage .kas.t { top: 18px; } [data-theme="kerala"] .stage .kas.b { bottom: 18px; }
+.k-bless { color: var(--gold); font-size: 17px; margin-bottom: 6px; } .k-names { font-family: var(--serif); font-size: 52px; line-height: 1; color: var(--btn); margin-bottom: 8px; } .k-names i { color: var(--gold); font-size: .5em; padding-inline: 6px; }
+.k-lamp { width: 150px; height: 195px; margin: 8px 0; overflow: visible; } .k-lamp .fl { opacity: 0; transform-origin: center bottom; transform: scale(.2); transition: opacity .5s, transform .8s cubic-bezier(.3,1.6,.5,1); } .k-lamp .gl { opacity: 0; transition: opacity 1s .3s; }
+#intro.open .k-lamp .fl { opacity: 1; transform: scale(1); } #intro.open .k-lamp .gl { opacity: 1; }
+.k-tap { font-size: 11px; letter-spacing: .3em; color: var(--muted); animation: pulse 2s infinite; } #intro.open .k-tap { opacity: 0; }
+[data-theme="kerala"] #intro { transition: opacity .8s 1.6s, visibility 0s 2.4s; }
+.k-hero { text-align: center; } .k-hero .top { padding: 16px 24px 4px; } .k-banner { height: 250px; background: url(photos/kerala-scene.svg) center 58% / cover; position: relative; } .k-banner::after { content: ""; position: absolute; inset: auto 0 0; height: 80px; background: linear-gradient(transparent, var(--paper)); }
+.k-hero .in { padding: 0 24px 44px; margin-top: -26px; position: relative; z-index: 2; } .k-hero h1 { font-size: clamp(48px, 14vw, 68px); line-height: 1; color: var(--btn); margin: 12px 0 8px; } .k-hero h1 span { display: block; color: var(--gold); font-style: italic; font-size: .4em; margin: 4px 0; }
+.k-frame { width: 74%; margin: 24px auto 0; padding: 8px; border: 1px solid var(--gold); box-shadow: 0 0 0 5px var(--paper), 0 0 0 6px var(--gold); border-radius: 6px; } .k-frame div { aspect-ratio: 4/5; position: relative; overflow: hidden; border-radius: 3px; }
+[data-theme="kerala"] section { border-top: 1px solid color-mix(in srgb, var(--gold) 35%, transparent); } [data-theme="kerala"] h2 { color: var(--btn); font-style: italic; }
+.k-card { padding: 22px 18px; margin-bottom: 16px; border: 1px solid var(--gold); background: linear-gradient(var(--paper2), transparent); } .k-card h3 { font-size: 30px; color: var(--btn); margin: 4px 0; } .k-card small { color: var(--muted); display: block; } .k-lampg { color: var(--gold); font-size: 22px; }
+.k-line { position: relative; text-align: left; padding-left: 34px; } .k-line::before { content: ""; position: absolute; left: 9px; top: 6px; bottom: 10px; border-left: 3px double var(--gold); }
+.k-line li { position: relative; padding-bottom: 26px; } .k-line li::before { content: "\2766"; position: absolute; left: -35px; top: -3px; color: var(--btn); background: var(--paper); font-size: 20px; line-height: 1.2; }
+.k-line em { font-style: normal; color: var(--gold); letter-spacing: .2em; font-size: 12px; } .k-line b { display: block; font-family: var(--serif); font-size: 21px; color: var(--btn); } .k-line p { color: var(--muted); font-size: 14px; margin: 2px 0 0; }
+.k-muh { display: inline-block; margin: 8px 0 4px; padding: 8px 18px; border: 1px solid var(--gold); background: var(--paper2); font-size: 12px; letter-spacing: .16em; }
+.k-count { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 22px; border-block: 3px double var(--gold); } .k-count div { padding: 14px 0; } .k-count b { font-family: var(--serif); font-size: 34px; font-weight: 500; display: block; line-height: 1; color: var(--btn); font-variant-numeric: tabular-nums; } .k-count span { font-size: 10px; letter-spacing: .2em; color: var(--muted); }
+.k-ev { margin-bottom: 18px; border: 1px solid var(--gold); background: #fff7; } .k-ev .hd { background: var(--btn); color: #f9edc7; padding: 10px; font-size: 11px; letter-spacing: .3em; } .k-ev .bd { padding: 20px 18px 24px; } .k-ev h3 { font-size: 28px; color: var(--btn); } .k-ev .time { color: var(--gold); letter-spacing: .12em; font-size: 14px; margin: 2px 0; } .k-ev small { display: block; color: var(--muted); margin: 6px 0 14px; } .k-ev .kas { height: 22px; }
+[data-theme="kerala"] .masonry > div { border: 2px solid var(--gold); border-radius: 4px; }
+.k-foot { text-align: center; background: var(--paper2); padding-bottom: 110px; } .k-foot .in { padding: 36px 24px 0; }
+
+/* polish: paper grain, gold foil names, parallax, sparkle burst */
+[data-theme="floral"] .app, [data-theme="seal"] .app, [data-theme="temple"] .app, [data-theme="kerala"] .app, [data-theme="minimal"] .app { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .35 0 0 0 0 .25 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.foil { background: linear-gradient(100deg, #8a6a22 0%, #f6e08f 28%, #c9a24a 48%, #fff3b8 60%, #a98532 82%, #f0d27a 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent !important; -webkit-text-fill-color: transparent; animation: foil 7s linear infinite; }
+@keyframes foil { to { background-position: -220% 0; } }
+.phimg { will-change: transform; transform: scale(1.12); }
+.spk { position: fixed; width: 6px; height: 6px; margin: -3px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 8px var(--gold); z-index: 70; pointer-events: none; animation: spk .9s ease-out forwards; }
+@keyframes spk { to { transform: translate(var(--dx), var(--dy)) scale(.2); opacity: 0; } }
+.share2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 400px) { .share2 { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .foil { animation: none; } }
+
+/* shared: particles, customise link, mute */
+#fx { position: fixed; top: 0; z-index: 30; pointer-events: none; }
+.cust { position: fixed; z-index: 60; bottom: 66px; left: 12px; background: var(--paper); color: var(--ink); border: 1px solid var(--gold); padding: 8px 14px; border-radius: 22px; font-size: 12px; letter-spacing: .06em; text-decoration: none; box-shadow: 0 3px 12px #0003; }
+html.embed .cust, html.embed #fx { display: none !important; }
+@media (prefers-reduced-motion: no-preference) { .rv.hide { opacity: 0; transform: translateY(18px); } .rv { transition: opacity .8s, transform .8s; } }
+@media (prefers-reduced-motion: reduce) { .door, .twinkle { transition-duration: .01s; animation: none !important; } }
+#mute { position: fixed; right: max(12px, calc(50% - 228px)); bottom: 16px; z-index: 40; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--gold); background: var(--paper); color: var(--gold); font-size: 18px; cursor: pointer; display: none; } #mute.on { display: block; }
+</style>
+</head>
+<body>
+<a class="back" href="index.html">&larr; All templates</a>
+<a class="order" id="orderBtn" target="_blank" rel="noopener" href="#">Order on WhatsApp</a>
+<a class="cust" id="custBtn" target="_blank" rel="noopener" href="#">Want it customised?</a>
+<div class="app" id="app"></div>
+
+<script>
+(function () {
+  var ORDER_NUMBER = "918078158179";   // Orders go to this WhatsApp number
+  var RSVP_NUMBER = "918078158179";    // Demo only: replace with the couple's number when delivering
+  var THEMES = { floral: "White Floral Elegance", royal: "Royal Rajasthani", starry: "Celestial Starry Serenade", minimal: "Modern Minimal", seal: "Classic Royal Seal", temple: "Temple Gopuram", celestial: "Celestial Envelope", kerala: "Kerala Kasavu" };
+  var params = new URLSearchParams(location.search);
+  var t = params.get("t") || "floral"; if (!THEMES[t]) t = "floral";
+  document.documentElement.setAttribute("data-theme", t);
+  if (params.get("embed")) document.documentElement.classList.add("embed");
+  document.title = THEMES[t] + " | Wedding Invitation Preview";
+
+  var D = {
+    groom: "Aarav Sharma", bride: "Meera Mishra", gi: "A", bi: "M",
+    gp: "Son of Mr. Ramesh Sharma and Mrs. Sunita Sharma", bp: "Daughter of Mr. Rajesh Mishra and Mrs. Anita Mishra",
+    date: "2026-11-22T10:00:00+05:30", dateText: "Sunday, 22 November 2026", city: "Jaipur, Rajasthan", rsvpBy: "15 November 2026",
+    quote: "Two souls with but a single thought, two hearts that beat as one.",
+    story: [["2020", "First meeting", "A quiet autumn morning where two paths crossed."], ["2022", "The bond", "Long conversations, shared dreams, two families growing close."],
+            ["2025", "Roka ceremony", "With the blessings of elders, our promises became official."], ["2026", "The wedding", "Beginning our journey together."]],
+    events: [["Wedding Ceremony", "Sunday, 22 November 2026", "10:00 AM – 1:00 PM", "Grand Heritage Resort", "Jaipur, Rajasthan"],
+             ["Royal Reception", "Sunday, 22 November 2026", "7:00 PM onwards", "Royal Palace Lawns", "Jaipur, Rajasthan"]]
+  };
+  if (t === "royal") {
+    D.quote = "May the seven steps we take together bind us for seven lifetimes.";
+    D.events = [["Mehendi & Sangeet", "Friday, 20 November 2026", "6:00 PM onwards", "Amer Haveli Gardens", "Jaipur, Rajasthan", "मेहंदी व संगीत"],
+                ["Haldi", "Saturday, 21 November 2026", "10:00 AM", "Amer Haveli Courtyard", "Jaipur, Rajasthan", "हल्दी"],
+                ["Baraat & Vivah", "Sunday, 22 November 2026", "5:00 PM onwards", "Grand Heritage Resort", "Jaipur, Rajasthan", "बारात व विवाह"]];
+  }
+  if (t === "starry") {
+    D.groom = "Ethan Cole"; D.bride = "Lily Hart"; D.gi = "E"; D.bi = "L";
+    D.gp = "Son of Mr. and Mrs. Cole"; D.bp = "Daughter of Mr. and Mrs. Hart"; D.quote = "Under a sky of stars, we found our forever.";
+    D.events = [["Evening Ceremony", "Sunday, 22 November 2026", "6:30 PM", "Skyline Terrace", "Jaipur, Rajasthan"], ["Dinner Under the Stars", "Sunday, 22 November 2026", "8:00 PM", "Skyline Gardens", "Jaipur, Rajasthan"]];
+  }
+  if (t === "minimal") D.events = [["Ceremony", "22.11.2026", "10:00", "Grand Heritage Resort", "Jaipur"], ["Reception", "22.11.2026", "19:00", "Royal Palace Lawns", "Jaipur"]];
+
+  if (t === "seal") {
+    D.groom = "Vikram Malhotra"; D.bride = "Ananya Kapoor"; D.gi = "V"; D.bi = "A";
+    D.gp = "Son of Mr. Rohit Malhotra and Mrs. Seema Malhotra"; D.bp = "Daughter of Mr. Sanjay Kapoor and Mrs. Neha Kapoor";
+    D.date = "2027-01-16T17:00:00+05:30"; D.dateText = "Saturday, 16 January 2027"; D.city = "Udaipur, Rajasthan"; D.rsvpBy = "2 January 2027";
+    D.quote = "In you I have found the love of my life and my closest, truest friend.";
+    D.story = [["2019", "A chance hello", "Introduced by friends at a winter wedding in Jaipur."], ["2021", "Two families meet", "Long lunches, easy laughter and instant warmth."], ["2026", "The engagement", "A quiet evening, a ring and a very easy yes."], ["2027", "The wedding", "We begin our forever surrounded by you."]];
+    D.events = [["Wedding Ceremony", "Saturday, 16 January 2027", "5:00 PM onwards", "City Palace Courtyard", "Udaipur, Rajasthan"], ["Royal Dinner & Reception", "Saturday, 16 January 2027", "8:00 PM onwards", "Lakeview Terrace", "Udaipur, Rajasthan"]];
+  }
+  if (t === "temple") {
+    D.groom = "Arjun Iyer"; D.bride = "Kavya Nair"; D.gi = "A"; D.bi = "K";
+    D.gp = "Son of Mr. Venkat Iyer and Mrs. Lakshmi Iyer"; D.bp = "Daughter of Mr. Gopal Nair and Mrs. Radha Nair";
+    D.date = "2026-12-06T09:00:00+05:30"; D.dateText = "Sunday, 6 December 2026"; D.city = "Madurai, Tamil Nadu"; D.rsvpBy = "28 November 2026";
+    D.quote = "Under the grace of the divine, two hearts unite in a sacred promise of love, happiness and shared dreams.";
+    D.story = [["2021", "First met", "Sharing a table and a filter coffee at a small cafe in Chennai."], ["2023", "Shared dreams", "Weekend temple trips, long drives and a growing certainty."], ["2025", "The proposal", "At sunset by the river, Arjun asked and Kavya said yes."], ["2026", "Forever begins", "We invite you to share our joy as we begin together."]];
+    D.events = [["Ring Ceremony & Sangeet", "Saturday, 5 December 2026", "6:30 PM onwards", "Meenakshi Grand Hall", "Madurai, Tamil Nadu"], ["Muhurtham", "Sunday, 6 December 2026", "9:00 AM – 11:30 AM", "Temple Kalyana Mandapam", "Madurai, Tamil Nadu"], ["Grand Reception", "Sunday, 6 December 2026", "7:30 PM onwards", "Meenakshi Grand Hall", "Madurai, Tamil Nadu"]];
+  }
+  if (t === "celestial") {
+    D.groom = "Daniel Rossi"; D.bride = "Isabella Moreau"; D.gi = "D"; D.bi = "I";
+    D.date = "2027-02-20T17:00:00+01:00"; D.dateText = "Saturday, 20 February 2027"; D.city = "Lake Como, Italy"; D.rsvpBy = "10 January 2027";
+    D.events = [["Ceremony of Vows", "Saturday, 20 February 2027", "5:00 PM", "The Candlelit Chapel", "Villa Aurora", "Rings, vows and a quiet moment before the sun goes down."],
+                ["Terrace Toasts", "Saturday, 20 February 2027", "6:30 PM", "The Garden Terrace", "Villa Aurora", "Sparkling toasts, small plates and live jazz over the lake."],
+                ["Midnight Dinner", "Saturday, 20 February 2027", "8:00 PM", "The Grand Hall", "Villa Aurora", "A long candlelit table and a multi-course dinner."],
+                ["The Last Dance", "Saturday, 20 February 2027", "9:30 PM", "The Pavilion", "Villa Aurora", "Champagne, a live band and dancing until the stars fade."]];
+  }
+  if (t === "kerala") {
+    D.groom = "Adithya Menon"; D.bride = "Devika Nair"; D.gi = "A"; D.bi = "D";
+    D.gp = "Son of Mr. Rajan Menon and Mrs. Latha Menon"; D.bp = "Daughter of Mr. Suresh Nair and Mrs. Geetha Nair";
+    D.date = "2027-01-17T10:15:00+05:30"; D.dateText = "Sunday, 17 January 2027"; D.city = "Kochi, Kerala"; D.rsvpBy = "3 January 2027";
+    D.quote = "With the blessings of the Almighty and our elders, two hearts become one.";
+    D.story = [["2020", "First meeting", "A college reunion in Kochi and one very long conversation."], ["2022", "Two families meet", "A warm Sunday sadya and an instant understanding."], ["2026", "The engagement", "Lit lamps, family blessings and a quiet yes."], ["2027", "The wedding", "We begin our forever with all of you beside us."]];
+    D.events = [["Mehendi & Sangeet", "Saturday, 16 January 2027", "6:00 PM onwards", "Lakeview Convention Centre", "Kochi, Kerala"], ["Muhurtham", "Sunday, 17 January 2027", "10:15 AM – 10:45 AM", "Sree Krishna Auditorium", "Kochi, Kerala"], ["Sadya (Wedding Feast)", "Sunday, 17 January 2027", "12:30 PM onwards", "Sree Krishna Auditorium", "Kochi, Kerala"], ["Reception", "Sunday, 17 January 2027", "6:30 PM onwards", "Lakeview Convention Centre", "Kochi, Kerala"]];
+  }
+  var G = D.groom.split(" ")[0], B = D.bride.split(" ")[0];
+  function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+  function map(u) { return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(u); }
+  function img(n, cls) { return '<img class="phimg" src="photos/' + t + '-' + n + '.svg" alt="">'; }
+  var HINDI = '॥ श्री गणेशाय नमः ॥';
+
+  // Masonry gallery: mixed aspect ratios flow into balanced columns
+  var MAS = [["couple", "4/5"], [1, "1/1"], [3, "3/4"], [2, "1/1"], [4, "4/5"], ["couple", "1/1"]];
+  function GAL(polaroid) { return MAS.map(function (m) { var i = img(m[0]); return polaroid ? '<div><span style="--ar:' + m[1] + '">' + i + '</span></div>' : '<div style="--ar:' + m[1] + '">' + i + '</div>'; }).join(""); }
+  function count(cls) { return '<div class="' + cls + '" role="timer" aria-label="Time until the wedding"><div><b id="d">0</b><span>DAYS</span></div><div><b id="h">0</b><span>HOURS</span></div><div><b id="m">0</b><span>MINS</span></div><div><b id="s">0</b><span>SECS</span></div></div>'; }
+  function rsvp(eyebrow, title) {
+    var st = new Date(D.date), en = new Date(st.getTime() + 3 * 36e5), fm = function (d) { return d.toISOString().replace(/[-:]|.d{3}/g, ""); };
+    var cal = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" + encodeURIComponent(G + " & " + B + " Wedding") + "&dates=" + fm(st) + "/" + fm(en) + "&location=" + encodeURIComponent(D.city) + "&details=" + encodeURIComponent("You are invited to the wedding of " + D.groom + " and " + D.bride + ".");
+    var shr = "https://wa.me/?text=" + encodeURIComponent("You are invited to the wedding of " + D.groom + " and " + D.bride + " on " + D.dateText + ". See the invitation: " + location.origin + location.pathname + "?t=" + t);
+    return '<section class="rv"><div class="eyebrow">Save the date</div><h2>Make it official</h2><div class="share2"><a class="btn alt" target="_blank" rel="noopener" href="' + cal + '">Add to calendar</a><a class="btn alt" target="_blank" rel="noopener" href="' + shr + '">Share on WhatsApp</a></div></section>' + '<section class="rv"><div class="eyebrow">' + eyebrow + '</div><h2>' + title + '</h2><p class="note">Kindly respond by ' + D.rsvpBy + '</p>' +
+      '<form id="rsvp"><label for="gname">Guest name<input id="gname" required autocomplete="name"></label><label for="gphone">Contact number<input id="gphone" type="tel" inputmode="tel" autocomplete="tel"></label>' +
+      '<div class="two"><label for="att">Attendance<select id="att"><option value="accepts">Accepts with pleasure</option><option value="declines">Declines with regret</option></select></label>' +
+      '<label for="cnt">Guests<select id="cnt"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label></div>' +
+      '<label for="msg">Special blessings<textarea id="msg" rows="3"></textarea></label><button class="btn" type="submit">Send blessings &amp; RSVP</button>' +
+      '<a class="btn alt" id="wa" target="_blank" rel="noopener" href="#">Send to WhatsApp</a><p class="note" id="rsvpNote"></p></form></section>' +
+      '<section class="rv"><div class="eyebrow">Divine wishes</div><h2>Blessings</h2><div id="wishes"><p class="note">Be the first to leave a blessing.</p></div></section>';
+  }
+  var INTRO = function (gan) { return '<div id="intro" role="button" tabindex="0" aria-label="Tap to open the invitation"><div class="stage"><div class="door l"></div><div class="door r"></div><div class="seal">' +
+    (gan ? '<div class="gan hi">' + HINDI + '</div>' : '') + '<div class="mono">' + D.gi + '<i>&amp;</i>' + D.bi + '</div><div class="rule"></div><div class="tap">TAP ANYWHERE TO OPEN</div></div></div></div>'; };
+  var AUDIO = '<button id="mute" aria-label="Mute or play music">&#9835;</button><audio id="song" src="music/' + t + '.mp3" loop preload="none"></audio>';
+  var h = "";
+
+  if (t === "floral") {
+    var sprig = '<svg class="f-sprig" viewBox="0 0 140 30" fill="none" stroke="#b88a3b" stroke-width="1"><path d="M10 15h120"/><path d="M70 15c-10-12-22-12-28-4 8 2 18 2 28 4zM70 15c10-12 22-12 28-4-8 2-18 2-28 4zM70 15c-8 10-18 12-26 6 8-2 18-4 26-6zM70 15c8 10 18 12 26 6-8-2-18-4-26-6z"/><circle cx="70" cy="15" r="3" fill="#b88a3b"/></svg>';
+    h += INTRO(false);
+    h += '<header class="f-hero">' + sprig + '<div class="eyebrow">Beginning of forever</div><h1>' + G + ' <span>weds</span> ' + B + '</h1><p class="lead">' + D.dateText + ' &middot; ' + D.city + '</p><div class="photo"><div>' + img("couple") + '</div></div></header>';
+    h += '<section class="rv"><div class="eyebrow">Meet the couple</div><h2>Two families, one celebration</h2><div class="people"><div class="person"><div class="badge">' + D.gi + '</div><div class="eyebrow">The groom</div><h3>' + esc(D.groom) + '</h3><small>' + esc(D.gp) + '</small></div><div class="person"><div class="badge">' + D.bi + '</div><div class="eyebrow">The bride</div><h3>' + esc(D.bride) + '</h3><small>' + esc(D.bp) + '</small></div></div><p class="quote">&ldquo;' + esc(D.quote) + '&rdquo;</p></section>';
+    h += '<section class="rv"><div class="eyebrow">Our journey</div><h2>How we met</h2><ul class="timeline">' + D.story.map(function (s) { return '<li><em>' + s[0] + '</em><b>' + s[1] + '</b><p>' + s[2] + '</p></li>'; }).join("") + '</ul></section>';
+    h += '<section class="rv"><div class="eyebrow">Join the celebration</div><h2>Counting down the days</h2><div class="big-date">' + D.dateText + '</div>' + count("count") + '</section>';
+    h += '<section class="rv"><div class="eyebrow">The celebration</div><h2>Wedding events</h2>' + D.events.map(function (e, i) { return '<div class="event"><div class="eyebrow">Event 0' + (i + 1) + '</div><h3>' + esc(e[0]) + '</h3><div class="day">' + e[1] + '</div><div class="time">' + e[2] + '</div><div class="where">' + esc(e[3]) + '<small>' + esc(e[4]) + '</small></div><a class="btn alt" style="margin-top:16px" target="_blank" rel="noopener" href="' + map(e[3] + " " + e[4]) + '">View location map</a></div>'; }).join("") + '</section>';
+    h += '<section class="rv"><div class="eyebrow">Captured moments</div><h2>Our love gallery</h2><div class="masonry">' + GAL(false) + '</div></section>';
+    h += rsvp("Your presence is a blessing", "Guest RSVP");
+    h += '<footer class="footer"><div class="eyebrow">Thank you</div><h2>' + G + ' &amp; ' + B + '</h2><p class="lead">With love and gratitude, we can’t wait to celebrate with you.</p></footer>';
+  }
+
+  if (t === "royal") {
+    h += INTRO(true);
+    h += '<div class="r-garland"></div><header class="r-hero"><div class="gan hi">' + HINDI + '</div><div class="eyebrow">शुभ विवाह &middot; Shubh Vivah</div><div class="jharokha"><div>' + img("couple") + '</div></div>' +
+         '<h1 class="foil">' + G + '<small class="hi">संग</small>' + B + '</h1><div class="r-date"><span>SUN</span><b>22</b><span>NOV<br>2026</span></div><p class="lead" style="margin-top:14px">' + D.city + '</p></header>';
+    h += '<section class="rv"><div class="r-title"><span class="hi">शुभ मुहूर्त</span><h2>With the blessings of our elders</h2></div><div class="r-fam">' +
+         '<div class="r-card"><div class="hi">वर पक्ष</div><div class="eyebrow">The groom</div><h3>' + esc(D.groom) + '</h3><small>' + esc(D.gp) + '</small></div>' +
+         '<div class="r-card"><div class="hi">वधू पक्ष</div><div class="eyebrow">The bride</div><h3>' + esc(D.bride) + '</h3><small>' + esc(D.bp) + '</small></div></div><p class="quote">&ldquo;' + esc(D.quote) + '&rdquo;</p></section>';
+    h += '<section class="rv"><div class="r-title"><span class="hi">समय की गिनती</span><h2>The countdown</h2></div><div class="big-date">' + D.dateText + '</div>' + count("r-med") + '</section>';
+    h += '<section class="rv"><div class="r-title"><span class="hi">उत्सव</span><h2>Three days of celebration</h2></div>' + D.events.map(function (e) { return '<div class="r-ev"><div class="hd"><span class="hi">' + e[5] + '</span><small>' + esc(e[0]) + '</small></div><div class="bd"><div class="day">' + e[1] + '</div><div class="time">' + e[2] + '</div><small>' + esc(e[3]) + ', ' + esc(e[4]) + '</small><a class="btn alt" target="_blank" rel="noopener" href="' + map(e[3] + " " + e[4]) + '">View location map</a></div></div>'; }).join("") + '</section>';
+    h += '<section class="rv"><div class="r-title"><span class="hi">यादें</span><h2>Our moments</h2></div><div class="r-gal masonry">' + GAL(false) + '</div></section>';
+    h += rsvp("आपकी उपस्थिति आशीर्वाद है", "Guest RSVP");
+    h += '<footer class="r-foot"><span class="hi">॥ शुभम् भवतु ॥</span><h2>' + G + ' &amp; ' + B + '</h2><p class="lead">Your presence will make our celebration complete.</p></footer>';
+  }
+
+  if (t === "starry") {
+    h += INTRO(false);
+    h += '<header class="s-hero">' + img("couple") + '<div class="twinkle"></div><div class="txt"><div class="eyebrow">Written in the stars</div><h1>' + G + '<span>&amp;</span>' + B + '</h1><div class="pill">22 · 11 · 2026</div></div></header>';
+    h += '<section class="rv"><div class="moon">&#9790;</div><p class="s-quote">&ldquo;' + esc(D.quote) + '&rdquo;</p><p class="note" style="margin-top:18px">' + esc(D.gp) + '<br>' + esc(D.bp) + '</p></section>';
+    h += '<section class="rv"><div class="eyebrow">Our constellation</div><h2>How our stars aligned</h2><ul class="constel">' + D.story.map(function (s) { return '<li><em>' + s[0] + '</em><b>' + s[1] + '</b><p>' + s[2] + '</p></li>'; }).join("") + '</ul></section>';
+    h += '<section class="rv"><div class="eyebrow">Until we say I do</div><h2>The countdown</h2>' + count("s-ring") + '<p class="lead" style="margin-top:18px">' + D.dateText + '</p></section>';
+    h += '<section class="rv"><div class="eyebrow">The night</div><h2>Celebrations</h2>' + D.events.map(function (e) { return '<div class="glass"><div class="eyebrow">' + esc(e[1]) + '</div><h3>' + esc(e[0]) + '</h3><div class="time">' + e[2] + '</div><small>' + esc(e[3]) + ', ' + esc(e[4]) + '</small><a class="btn alt" target="_blank" rel="noopener" href="' + map(e[3] + " " + e[4]) + '">View location map</a></div>'; }).join("") + '</section>';
+    h += '<section class="rv"><div class="eyebrow">Moments</div><h2>Memories</h2><div class="polaroids masonry">' + GAL(true) + '</div></section>';
+    h += rsvp("Join us under the stars", "RSVP");
+    h += '<footer class="s-foot"><div class="moon">&#10022;</div><h2>' + G + ' &amp; ' + B + '</h2><p class="lead">See you under the stars.</p></footer>';
+  }
+
+  if (t === "minimal") {
+    h += INTRO(false);
+    h += '<div class="m-top"><span>' + D.gi + ' + ' + D.bi + '</span><span>22.11.2026</span></div>';
+    h += '<header class="m-names"><h1>' + G + '<span>and</span>' + B + '</h1></header><div class="m-photo">' + img("couple") + '</div>';
+    h += '<div class="m-info rv"><div><b>Date</b>' + D.dateText + '</div><div><b>City</b>' + D.city + '</div><div><b>Groom</b>' + esc(D.groom) + '<br><span class="note">' + esc(D.gp) + '</span></div><div><b>Bride</b>' + esc(D.bride) + '<br><span class="note">' + esc(D.bp) + '</span></div></div>';
+    h += '<section class="rv"><h2>Countdown</h2>' + count("m-count") + '</section>';
+    h += '<section class="rv"><h2>Schedule</h2>' + D.events.map(function (e) { return '<div class="m-row"><div class="t">' + e[2] + '<small>' + e[1] + '</small></div><div><h3>' + esc(e[0]) + '</h3><p>' + esc(e[3]) + ', ' + esc(e[4]) + '</p><a target="_blank" rel="noopener" href="' + map(e[3] + " " + e[4]) + '">Map &rarr;</a></div></div>'; }).join("") + '</section>';
+    h += '<section class="rv"><h2>Our story</h2>' + D.story.map(function (s) { return '<div class="m-year"><b>' + s[0] + '</b><p><strong>' + s[1] + '</strong>' + s[2] + '</p></div>'; }).join("") + '</section>';
+    h += '<div class="m-gal masonry rv">' + GAL(false) + '</div>';
+    h += rsvp("Reply", "RSVP");
+    h += '<footer class="m-foot"><h2>' + G + '<br>&amp; ' + B + '</h2><p class="note">' + D.dateText + ' · ' + D.city + '</p></footer>';
+  }
+  if (t === "seal") {
+    var leaves = ""; for (var i = 0; i < 9; i++) { leaves += '<ellipse cx="' + (60 + (i % 2) * 22) + '" cy="' + (700 - i * 70) + '" rx="22" ry="8" transform="rotate(' + (i % 2 ? -35 : 35) + ' ' + (60 + (i % 2) * 22) + ' ' + (700 - i * 70) + ')"/>'; }
+    h += '<div id="intro" role="button" tabindex="0" aria-label="Tap to open the invitation"><div class="stage"><div class="env-paper"><svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" stroke="#f4efe6" stroke-width="1.2" fill="none"><path d="M60 780C90 600 30 440 80 250"/>' + leaves + '<g transform="translate(260 0)"><path d="M60 780C90 600 30 440 80 250"/>' + leaves + '</g></svg></div><div class="env-flap"></div><div class="wax">' + D.gi + '<i>&amp;</i>' + D.bi + '</div><div class="q-tap">TAP TO OPEN</div></div></div>';
+    h += '<header class="q-hero"><div class="q-mono"><span>' + D.gi + '</span><i>&amp;</i><span>' + D.bi + '</span></div><div class="eyebrow">Together with their families</div><h1 class="foil">' + G + '<em>and</em>' + B + '</h1><p class="lead">' + D.dateText + ' &middot; ' + D.city + '</p><div class="q-oval"><div>' + img("couple") + '</div></div></header>';
+    h += '<section class="rv"><div class="eyebrow">Meet the couple</div><h2>Two families, one celebration</h2><div class="q-pair"><div><div class="eyebrow">The groom</div><h3>' + esc(D.groom) + '</h3><small>' + esc(D.gp) + '</small></div><div><div class="eyebrow">The bride</div><h3>' + esc(D.bride) + '</h3><small>' + esc(D.bp) + '</small></div></div><p class="quote">&ldquo;' + esc(D.quote) + '&rdquo;</p></section>';
+    h += '<section class="rv"><div class="eyebrow">Our journey</div><h2>How our story unfolded</h2><div class="q-st">' + D.story.map(function (s, i) { return '<div><b>' + ["I", "II", "III", "IV"][i] + '</b><span><em>' + s[0] + '</em><strong>' + s[1] + '</strong><p>' + s[2] + '</p></span></div>'; }).join("") + '</div></section>';
+    h += '<section class="rv"><div class="eyebrow">Save the date</div><h2>Scratch to reveal</h2><div class="scratch"><div class="dt"><small>OUR WEDDING DATE</small>' + D.dateText + '</div><canvas id="scr" tabindex="0" role="button" aria-label="Scratch to reveal the wedding date. Press Enter to reveal."></canvas></div><p class="note">' + D.city + '</p>' + count("q-count") + '</section>';
+    h += '<section class="rv"><div class="eyebrow">The celebration</div><h2>Wedding events</h2>' + D.events.map(function (e, i) { return '<div class="q-ev"><div class="eyebrow">Event 0' + (i + 1) + '</div><h3>' + esc(e[0]) + '</h3><div class="time">' + e[2] + '</div><small>' + esc(e[1]) + '<br>' + esc(e[3]) + ', ' + esc(e[4]) + '</small><a class="btn alt" target="_blank" rel="noopener" href="' + map(e[3] + " " + e[4]) + '">View location map</a></div>'; }).join("") + '</section>';
+    h += '<section class="rv"><div class="eyebrow">Captured moments</div><h2>Our gallery</h2><div class="masonry">' + GAL(false) + '</div></section>';
+    h += rsvp("Your presence is a blessing", "Guest RSVP");
+    h += '<footer class="q-foot"><div class="wax">' + D.gi + '<i>&amp;</i>' + D.bi + '</div><h2>' + G + ' &amp; ' + B + '</h2><p class="lead">With love and gratitude.</p></footer>';
+  }
+
+  if (t === "temple") {
+    var lot = '<div class="t-lotus">❀ ❀ ❀</div>';
+    h += '<div id="intro" role="button" tabindex="0" aria-label="Tap to enter the invitation"><div class="stage"><div class="t-intro"></div><div class="t-name"><span class="hi">' + HINDI + '</span><div class="mono">' + D.gi + '<i>&amp;</i>' + D.bi + '</div></div><div class="om">ॐ</div><div class="t-tap">TAP TO ENTER</div></div></div>';
+    h += '<header class="t-hero"><div class="t-banner"></div><div class="in">' + lot + '<div class="eyebrow" style="margin-top:8px">With divine blessings</div><h1>' + G + '<span>weds</span>' + B + '</h1><p class="lead">' + D.dateText + ' &middot; ' + D.city + '</p><div class="photo"><div>' + img("couple") + '</div></div></div></header>';
+    h += '<section class="rv"><div class="eyebrow">Meet the couple</div><h2>Blessed by family</h2><div class="t-card"><div class="sub">With divine blessings</div><div class="eyebrow">The groom</div><h3>' + esc(D.groom) + '</h3><small>' + esc(D.gp) + '</small></div><div class="t-card"><div class="sub">In the presence of love</div><div class="eyebrow">The bride</div><h3>' + esc(D.bride) + '</h3><small>' + esc(D.bp) + '</small></div><p class="quote">&ldquo;' + esc(D.quote) + '&rdquo;</p></section>';
+    h += '<section class="rv"><div class="eyebrow">Our journey</div><h2>How we met</h2><ul class="t-line">' + D.story.map(function (s) { return '<li><em>' + s[0] + '</em><b>' + s[1] + '</b><p>' + s[2] + '</p></li>'; }).join("") + '</ul></section>';
+    h += '<section class="rv"><div class="eyebrow">Join the celebration</div><h2>The sacred countdown</h2><p class="note">Tap the sacred ring to swing the golden gates open</p><div class="gates" id="gates"><div class="gates-in"><div class="big-date">' + D.dateText + '</div><div class="eyebrow">' + D.city + '</div><div style="margin-top:12px">' + count("t-count") + '</div></div><div class="gate l"></div><div class="gate r"></div><button class="om2" id="gatebtn" aria-label="Open the gates">ॐ</button></div></section>';
+    h += '<section class="rv"><div class="eyebrow">The celebration</div><h2>Wedding events</h2>' + D.events.map(function (e, i) { return '<div class="t-ev"><i></i><div><div class="eyebrow">Event 0' + (i + 1) + '</div><h3>' + esc(e[0]) + '</h3><div class="time">' + e[2] + '</div><small>' + esc(e[1]) + '<br>' + esc(e[3]) + ', ' + esc(e[4]) + '</small><a class="btn alt" target="_blank" rel="noopener" href="' + map(e[3] + " " + e[4]) + '">View location map</a></div></div>'; }).join("") + '</section>';
+    h += '<section class="rv"><div class="eyebrow">Captured moments</div><h2>Our love gallery</h2><div class="masonry">' + GAL(false) + '</div></section>';
+    h += rsvp("Your presence is a blessing", "Guest RSVP");
+    h += '<section class="rv"><div class="eyebrow">Wishing well</div><h2>Registry &amp; gifts</h2><div class="reg"><p>Your presence is the greatest gift of all. Should you wish to bless us further, a contribution towards our new home would be sincerely appreciated.</p><button class="btn" id="regbtn" type="button">Tap to open details</button><p id="regtxt" hidden style="margin-top:14px">Please message the family on WhatsApp for gifting details.</p></div></section>';
+    h += '<footer class="t-foot">' + lot + '<h2>' + G + ' &amp; ' + B + '</h2><p class="lead">May your life be filled with love, light and lasting joy. We cannot wait to celebrate with you.</p></footer>';
+  }
+
+  if (t === "celestial") {
+    var moon = '<svg class="c-moon" viewBox="0 0 100 100"><defs><radialGradient id="mg" cx=".35" cy=".3"><stop offset="0" stop-color="#fff7d0"/><stop offset="1" stop-color="#d8b765"/></radialGradient></defs><path d="M62 10a40 40 0 1 0 0 80 32 32 0 0 1 0-80z" fill="url(#mg)"/></svg>';
+    h += '<div id="intro" role="button" tabindex="0" aria-label="Tap to open the invitation"><div class="stage"><div class="c-title">THE WEDDING INVITATION</div><div class="c-script">' + G + ' &amp; ' + B + '</div><div class="env"><div class="fl"></div><div class="moonseal">' + D.gi + '&amp;' + D.bi + '</div></div><div class="c-tap">&#10022; TAP TO OPEN &#10022;</div></div></div>';
+    h += '<header class="c-hero">' + moon + '<div class="eyebrow">Under the starlit sky</div><div class="names foil">' + G + '<span>&amp;</span>' + B + '</div><div class="eyebrow">A celestial love serenade</div><div class="c-med"><div>' + img("couple") + '</div></div></header>';
+    h += '<section class="rv"><p class="c-letter"><b>DEAREST FAMILY AND FRIENDS</b>Like stars that found their orbits, our paths have aligned in a beautiful universe. We request the honour of your presence as we vow to walk together under the grace of the heavens.</p></section>';
+    h += '<section class="rv"><div class="eyebrow">The celebration begins in</div><h2 style="margin-bottom:0">The countdown</h2>' + count("c-count") + '<button class="moonbtn" id="moonbtn" aria-label="Hold the moon to reveal the date. Press Enter to reveal."><span>&#9790;</span></button><div class="moondate" id="moondate">' + D.dateText + '</div><div class="moonhint">HOLD THE MOON TO REVEAL</div></section>';
+    h += '<section class="rv"><div class="eyebrow">A night to be written in the stars</div><h2>Schedule of events</h2>' + D.events.map(function (e) { return '<div class="c-ev"><div class="t">' + e[2].replace(" ", "<small>") + '</small></div><div><h3>' + esc(e[0]) + '</h3><div class="gl">&#9790; &#9679; &#9789;</div><div class="pl">' + esc(e[3]) + '</div><p>' + esc(e[5]) + '</p></div></div>'; }).join("") + '</section>';
+    h += '<section class="rv"><div class="eyebrow">The venue</div><div class="c-card" style="margin-top:14px"><h3>Villa Aurora</h3><p>Via delle Stelle 45, ' + D.city + '</p><a class="btn alt" target="_blank" rel="noopener" href="' + map("Villa Aurora " + D.city) + '">View on Google Maps</a></div></section>';
+    h += '<section class="rv"><div class="eyebrow">Wedding style</div><h2>Dress code</h2><div class="swatch"><div><i style="background:#0b1230"></i>MIDNIGHT</div><div><i style="background:#d8b765"></i>STAR GOLD</div><div><i style="background:#c3c9d6"></i>SILVER</div><div><i style="background:#2c3a7a"></i>INDIGO</div><div><i style="background:#ecdcc0"></i>CHAMPAGNE</div></div><div class="dc"><div><b>FOR LADIES</b><p>Floor-length gowns or elegant cocktail dresses in midnight, silver, indigo or champagne.</p></div><div><b>FOR GENTLEMEN</b><p>Tailored black-tie or classic dark suits with a dark tie and leather shoes.</p></div></div></section>';
+    h += '<section class="rv"><div class="c-card"><div class="eyebrow">Need assistance?</div><h3>Travel &amp; stay</h3><p>For flights, hotels near ' + D.city + ' or the programme, please contact our coordinator: Sophia Laurent, +00 000 000 0000.</p><button class="btn alt" id="regbtn" type="button">Tap to open registry</button><p id="regtxt" hidden style="margin-top:14px">Your presence is our greatest gift. Please message us for registry details.</p></div></section>';
+    h += rsvp("RSVP", "Confirm attendance");
+    h += '<footer class="c-foot">' + moon + '<div class="note">Written in the stars</div><div class="names">' + G + ' &amp; ' + B + '</div><p class="lead">' + D.dateText + '</p></footer>';
+  }
+  if (t === "kerala") {
+    var tier = function (y, w) { return '<path d="M' + (100 - w) + ' ' + y + 'h' + (2 * w) + 'l-6 12h-' + (2 * w - 12) + 'z" fill="#c9a24a"/>'; };
+    var flame = function (x, y) { return '<path class="fl" d="M' + x + ' ' + y + 'c-7 9-4 17 0 20 4-3 7-11 0-20z" fill="#ffb02e"/><circle class="gl" cx="' + x + '" cy="' + (y + 12) + '" r="16" fill="#ffd36a" opacity=".35"/>'; };
+    var lampSvg = '<svg class="k-lamp" viewBox="0 0 200 260"><ellipse cx="100" cy="246" rx="62" ry="9" fill="#c9a24a"/><path d="M78 246h44l-10-56H88z" fill="#c9a24a"/><rect x="92" y="96" width="16" height="96" fill="#c9a24a"/>' + tier(96, 70) + tier(70, 52) + tier(48, 34) + flame(34, 20) + flame(166, 44) + flame(100, 14) + flame(46, 46) + flame(154, 70) + '</svg>';
+    h += '<div id="intro" role="button" tabindex="0" aria-label="Tap to light the lamp and open the invitation"><div class="stage"><div class="kas t"></div><div class="k-bless ml">ഹരിശ്രീ ഗണപതയേ നമഃ</div><div class="k-names">' + D.gi + '<i>&amp;</i>' + D.bi + '</div>' + lampSvg + '<div class="k-tap">TAP TO LIGHT THE LAMP</div><div class="kas b"></div></div></div>';
+    h += '<header class="k-hero"><div class="kas"></div><div class="top"><div class="k-bless ml" style="color:var(--gold)">ഹരിശ്രീ ഗണപതയേ നമഃ</div><div class="eyebrow"><span class="ml">ശുഭ വിവാഹം</span> &middot; Shubha Vivaham</div></div><div class="k-banner"></div><div class="in"><h1>' + G + '<span>weds</span>' + B + '</h1><p class="lead">' + D.dateText + ' &middot; ' + D.city + '</p><div class="k-frame"><div>' + img("couple") + '</div></div></div></header>';
+    h += '<section class="rv"><div class="eyebrow">Meet the couple</div><h2>Two families, one celebration</h2><div class="k-card"><div class="k-lampg">❂</div><div class="eyebrow">The groom</div><h3>' + esc(D.groom) + '</h3><small>' + esc(D.gp) + '</small></div><div class="k-card"><div class="k-lampg">❂</div><div class="eyebrow">The bride</div><h3>' + esc(D.bride) + '</h3><small>' + esc(D.bp) + '</small></div><p class="quote">&ldquo;' + esc(D.quote) + '&rdquo;</p></section>';
+    h += '<section class="rv"><div class="eyebrow">Our journey</div><h2>How we met</h2><ul class="k-line">' + D.story.map(function (s) { return '<li><em>' + s[0] + '</em><b>' + s[1] + '</b><p>' + s[2] + '</p></li>'; }).join("") + '</ul></section>';
+    h += '<section class="rv"><div class="eyebrow">Join the celebration</div><h2>The muhurtham countdown</h2><div class="big-date">' + D.dateText + '</div><div class="k-muh">MUHURTHAM &middot; 10:15 AM &ndash; 10:45 AM</div><div class="eyebrow" style="margin-top:6px">' + D.city + '</div>' + count("k-count") + '</section>';
+    h += '<section class="rv"><div class="eyebrow">The celebration</div><h2>Wedding events</h2>' + D.events.map(function (e, i) { return '<div class="k-ev"><div class="hd">EVENT 0' + (i + 1) + '</div><div class="bd"><h3>' + esc(e[0]) + '</h3><div class="time">' + e[2] + '</div><small>' + esc(e[1]) + '<br>' + esc(e[3]) + ', ' + esc(e[4]) + '</small><a class="btn alt" target="_blank" rel="noopener" href="' + map(e[3] + " " + e[4]) + '">View location map</a></div><div class="kas"></div></div>'; }).join("") + '</section>';
+    h += '<section class="rv"><div class="eyebrow">Captured moments</div><h2>Our love gallery</h2><div class="masonry">' + GAL(false) + '</div></section>';
+    h += rsvp("Your presence is a blessing", "Guest RSVP");
+    h += '<footer class="k-foot"><div class="kas"></div><div class="in"><div class="k-lampg">❂</div><div class="eyebrow">Thank you &middot; <span class="ml">നന്ദി</span></div><h2>' + G + ' &amp; ' + B + '</h2><p class="lead">With the blessings of the Almighty and our elders, we cannot wait to celebrate with you.</p></div></footer>';
+  }
+  h += AUDIO;
+  document.getElementById("app").innerHTML = h;
+
+  var $ = function (id) { return document.getElementById(id); };
+  $("orderBtn").href = "https://wa.me/" + ORDER_NUMBER + "?text=" + encodeURIComponent("Hi! I'd like to order the \"" + THEMES[t] + "\" wedding invitation (₹699).");
+  $("custBtn").href = "https://wa.me/" + ORDER_NUMBER + "?text=" + encodeURIComponent("Hi! I like the \"" + THEMES[t] + "\" design and would like a customised version.");
+  $("orderBtn").innerHTML = "Order on WhatsApp · <b>₹699</b> <s style=\"opacity:.7\">₹999</s>";
+  var intro = $("intro"), song = $("song"), mute = $("mute");
+  function burst(x, y) { for (var i = 0; i < 16; i++) { var d = document.createElement("i"); d.className = "spk"; var a = Math.random() * 6.28, r = 50 + Math.random() * 90; d.style.cssText = "left:" + x + "px;top:" + y + "px;--dx:" + Math.cos(a) * r + "px;--dy:" + Math.sin(a) * r + "px"; document.body.appendChild(d); setTimeout(function (el) { el.remove(); }.bind(null, d), 1000); } }
+  var lastTap = null; intro.addEventListener("pointerdown", function (e) { lastTap = e; });
+  function openCard() { if (lastTap && !params.get("embed")) burst(lastTap.clientX, lastTap.clientY); intro.classList.add("open"); startMusic(); }
+  intro.addEventListener("click", openCard);
+  intro.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") openCard(); });
+  mute.addEventListener("click", function () { var on; if (useSynth) on = synth.toggle(); else { if (song.paused) song.play(); else song.pause(); on = !song.paused; } mute.style.opacity = on ? 1 : .5; });
+
+  // Scratch-to-reveal date (seal theme)
+  var scr = $("scr");
+  if (scr) {
+    var box = scr.parentNode, W = box.clientWidth, H = box.clientHeight; scr.width = W; scr.height = H;
+    var cx = scr.getContext("2d"), g = cx.createLinearGradient(0, 0, W, H); g.addColorStop(0, "#c9bca6"); g.addColorStop(.5, "#ddd2bd"); g.addColorStop(1, "#bfb099");
+    cx.fillStyle = g; cx.fillRect(0, 0, W, H); cx.fillStyle = "#6f6350"; cx.font = "500 12px Jost, sans-serif"; cx.textAlign = "center"; cx.fillText("SCRATCH HERE TO REVEAL THE DATE", W / 2, H / 2 + 4);
+    cx.globalCompositeOperation = "destination-out";
+    var down = false, moves = 0;
+    var reveal = function () { scr.style.opacity = 0; scr.style.pointerEvents = "none"; };
+    var cover = function () { var d = cx.getImageData(0, 0, W, H).data, c = 0, n = 0; for (var i = 3; i < d.length; i += 64) { n++; if (d[i] === 0) c++; } if (c / n > .35) reveal(); };
+    var scratch = function (e) { var r = scr.getBoundingClientRect(); cx.beginPath(); cx.arc(e.clientX - r.left, e.clientY - r.top, 20, 0, 7); cx.fill(); if (++moves % 5 === 0) cover(); };
+    scr.addEventListener("pointerdown", function (e) { down = true; try { scr.setPointerCapture(e.pointerId); } catch (x) {} scratch(e); });
+    scr.addEventListener("pointermove", function (e) { if (down) scratch(e); });
+    scr.addEventListener("pointerup", function () { down = false; cover(); });
+    scr.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); reveal(); } });
+  }
+  // Sacred gates (temple theme)
+  if ($("gatebtn")) $("gatebtn").addEventListener("click", function () { $("gates").classList.add("open"); });
+  // Registry toggle (temple, celestial)
+  if ($("regbtn")) $("regbtn").addEventListener("click", function () { var r = $("regtxt"); r.hidden = !r.hidden; });
+  // Hold the moon (celestial theme)
+  var mb = $("moonbtn");
+  if (mb) {
+    var st = 0, raf = 0, done = false;
+    var show = function () { done = true; $("moondate").classList.add("show"); mb.style.setProperty("--p", "360deg"); };
+    var frame = function () { var p = Math.min(1, (Date.now() - st) / 1100); mb.style.setProperty("--p", (p * 360) + "deg"); if (p >= 1) { show(); return; } raf = requestAnimationFrame(frame); };
+    mb.addEventListener("pointerdown", function () { if (done) return; st = Date.now(); frame(); });
+    ["pointerup", "pointerleave", "pointercancel"].forEach(function (ev) { mb.addEventListener(ev, function () { if (!done) { cancelAnimationFrame(raf); mb.style.setProperty("--p", "0deg"); } }); });
+    mb.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(); } });
+  }
+  // ---------- Background music: music/<theme>.mp3 if present, otherwise a generated ambient tune in a scale that suits the theme ----------
+  var MUSIC = {
+    floral:    { root: 261.63, sc: [0, 2, 4, 7, 9], wave: "triangle", step: .6, drone: 0, oct: [0, 1], rest: .25, cut: 3200, len: 1.8, vol: .5 },
+    royal:     { root: 146.83, sc: [0, 1, 4, 5, 7, 8, 11], wave: "sawtooth", step: .5, drone: 1, oct: [1, 2], rest: .2, cut: 1700, len: 1.3, vol: .32 },
+    temple:    { root: 155.56, sc: [0, 1, 4, 5, 7, 8, 11], wave: "triangle", step: .58, drone: 1, oct: [1, 2], rest: .2, cut: 2600, len: 1.5, vol: .45 },
+    kerala:    { root: 196, sc: [0, 2, 4, 7, 9], wave: "sine", step: .7, drone: 1, oct: [1, 2], rest: .3, cut: 3000, len: 2.2, vol: .6 },
+    starry:    { root: 220, sc: [0, 3, 5, 7, 10], wave: "sine", step: 1.4, drone: 0, oct: [0, 1], rest: .3, cut: 2400, len: 4, vol: .45, pad: 1 },
+    celestial: { root: 174.61, sc: [0, 3, 5, 7, 10], wave: "sine", step: 1.6, drone: 0, oct: [0, 1], rest: .3, cut: 2200, len: 4.5, vol: .45, pad: 1 },
+    seal:      { root: 261.63, sc: [0, 2, 4, 5, 7, 9, 11], wave: "triangle", step: .5, drone: 0, oct: [0, 1], rest: .15, cut: 3600, len: 1.6, vol: .45 },
+    minimal:   { root: 196, sc: [0, 2, 4, 7, 9], wave: "sine", step: .9, drone: 0, oct: [0, 1], rest: .4, cut: 3000, len: 2.4, vol: .5 }
+  };
+  var synth = (function () {
+    var c = MUSIC[t], ctx, master, timer, next = 0, idx = 2, running = false;
+    function note(f, when, dur, vol) {
+      var o = ctx.createOscillator(), g = ctx.createGain(), fl = ctx.createBiquadFilter();
+      o.type = c.wave; o.frequency.value = f; fl.type = "lowpass"; fl.frequency.value = c.cut;
+      var a = c.pad ? .6 : .012;
+      g.gain.setValueAtTime(0, when); g.gain.linearRampToValueAtTime(vol, when + a); g.gain.exponentialRampToValueAtTime(.0008, when + dur);
+      o.connect(fl); fl.connect(g); g.connect(master); o.start(when); o.stop(when + dur + .05);
+    }
+    function tick() {
+      while (next < ctx.currentTime + .5) {
+        if (Math.random() > c.rest) {
+          idx = Math.max(0, Math.min(c.sc.length - 1, idx + [-2, -1, -1, 0, 1, 1, 2][Math.floor(Math.random() * 7)]));
+          var oc = c.oct[Math.floor(Math.random() * c.oct.length)], f = c.root * Math.pow(2, (c.sc[idx] + 12 * oc) / 12);
+          note(f, next, c.len, .14 * c.vol); if (c.pad) note(f * 1.5, next, c.len, .05 * c.vol);
+        }
+        next += c.step * (Math.random() > .8 ? 2 : 1);
+      }
+    }
+    return {
+      start: function () {
+        if (running) return; running = true;
+        var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+        ctx = new AC(); master = ctx.createGain(); master.gain.value = 0; master.gain.linearRampToValueAtTime(.9, ctx.currentTime + 2);
+        var dl = ctx.createDelay(1), fb = ctx.createGain(), wet = ctx.createGain(); dl.delayTime.value = .38; fb.gain.value = .38; wet.gain.value = .45;
+        master.connect(ctx.destination); master.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(ctx.destination);
+        if (c.drone) [[.5, "sine", .05], [.75, "triangle", .025]].forEach(function (d) { var o = ctx.createOscillator(), g = ctx.createGain(), l = ctx.createOscillator(), lg = ctx.createGain(); o.type = d[1]; o.frequency.value = c.root * d[0]; g.gain.value = d[2]; l.frequency.value = .12; lg.gain.value = d[2] * .5; l.connect(lg); lg.connect(g.gain); o.connect(g); g.connect(master); o.start(); l.start(); });
+        next = ctx.currentTime + .2; timer = setInterval(tick, 200); tick();
+      },
+      toggle: function () { if (!ctx) return true; if (ctx.state === "running") { ctx.suspend(); return false; } ctx.resume(); return true; }
+    };
+  })();
+  var useSynth = false;
+  function startMusic() {
+    if (params.get("embed")) return;
+    var done = function () { useSynth = true; synth.start(); mute.classList.add("on"); };
+    try { var p = song.play(); if (p && p.then) p.then(function () { mute.classList.add("on"); }).catch(done); else done(); } catch (e) { done(); }
+  }
+
+  // ---------- Particles: a different moving effect for each theme ----------
+  var FX = {
+    floral:    [["petal", ["#f3b9b6", "#fbd9d6", "#ffffff", "#e9a7a2"], 22]],
+    royal:     [["spark", ["#ffd36a", "#f39c12", "#fff1b8"], 34], ["petal", ["#f39c12", "#ffcf5a"], 9]],
+    temple:    [["petal", ["#ff9f43", "#ff7aa2", "#ffd1de"], 15], ["spark", ["#ffd36a", "#fff1b8"], 14]],
+    kerala:    [["flower", ["#ffffff"], 16], ["leaf", ["#4f9a63", "#2f7a4a"], 7], ["firefly", ["#ffe08a"], 9]],
+    starry:    [["star", ["#ffffff", "#cfd6ff", "#e8d28a"], 55], ["shoot", ["#ffffff"], 1]],
+    celestial: [["star", ["#ffffff", "#e8d28a", "#b8c4ff"], 65], ["shoot", ["#ffffff"], 1]],
+    seal:      [["dust", ["#b4903a", "#d8b765", "#ffffff"], 30], ["leaf", ["#8b9a73"], 5]],
+    minimal:   [["dust", ["#1d1d1b"], 26]]
+  };
+  (function () {
+    if (params.get("embed")) return;
+    if (!params.get("fx") && window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var cv = document.createElement("canvas"); cv.id = "fx"; document.body.appendChild(cv);
+    var cx = cv.getContext("2d"), W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2), P = [], shoot = null, nextShoot = 3000;
+    function size() { var r = $("app").getBoundingClientRect(); W = r.width; H = innerHeight; cv.style.left = r.left + "px"; cv.style.width = W + "px"; cv.style.height = H + "px"; cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+    function make(kind, cols, first) {
+      var p = { k: kind, c: cols[Math.floor(Math.random() * cols.length)], x: rnd(0, W), y: first ? rnd(0, H) : 0, s: rnd(4, 9), r: rnd(0, 6.28), vr: rnd(-.02, .02), ph: rnd(0, 6.28), sp: rnd(.4, 1) };
+      if (kind === "petal" || kind === "flower" || kind === "leaf") { p.y = first ? rnd(0, H) : rnd(-30, -5); p.vy = rnd(.35, .9); p.sw = rnd(.4, 1.2); if (kind === "flower") p.s = rnd(4, 6.5); }
+      if (kind === "spark") { p.y = first ? rnd(0, H) : H + 10; p.vy = -rnd(.3, .9); p.s = rnd(1, 2.6); p.sw = rnd(.2, .6); }
+      if (kind === "star") { p.y = rnd(0, H); p.s = rnd(.7, 2.1); }
+      if (kind === "dust") { p.y = rnd(0, H); p.s = rnd(.8, 2); p.vx = rnd(-.15, .15); p.vy = rnd(-.2, .05); }
+      if (kind === "firefly") { p.y = rnd(H * .4, H); p.s = rnd(1.5, 2.8); p.vx = rnd(-.3, .3); p.vy = rnd(-.3, .3); }
+      return p;
+    }
+    function build() { P = []; var k = (window.innerWidth < 500 ? .8 : 1); FX[t].forEach(function (g) { if (g[0] === "shoot") return; for (var i = 0; i < Math.round(g[2] * k); i++) P.push(make(g[0], g[1], true)); }); }
+    function draw(p, tm) {
+      cx.save(); cx.translate(p.x, p.y); cx.fillStyle = p.c;
+      if (p.k === "petal") { cx.rotate(p.r); cx.globalAlpha = .75; cx.beginPath(); cx.ellipse(0, 0, p.s, p.s * .55, 0, 0, 6.28); cx.fill(); }
+      else if (p.k === "leaf") { cx.rotate(p.r); cx.globalAlpha = .7; cx.beginPath(); cx.moveTo(-p.s * 1.4, 0); cx.quadraticCurveTo(0, -p.s, p.s * 1.4, 0); cx.quadraticCurveTo(0, p.s, -p.s * 1.4, 0); cx.fill(); }
+      else if (p.k === "flower") { cx.rotate(p.r); cx.globalAlpha = .9; cx.strokeStyle = "#e8d9a0"; cx.lineWidth = .6; for (var i = 0; i < 5; i++) { cx.rotate(1.2566); cx.beginPath(); cx.ellipse(p.s * .7, 0, p.s * .7, p.s * .38, 0, 0, 6.28); cx.fill(); cx.stroke(); } cx.fillStyle = "#f2c94c"; cx.beginPath(); cx.arc(0, 0, p.s * .28, 0, 6.28); cx.fill(); }
+      else if (p.k === "spark" || p.k === "firefly") { var a = (.5 + .5 * Math.sin(tm / 300 + p.ph)) * .85; var g = cx.createRadialGradient(0, 0, 0, 0, 0, p.s * 4); g.addColorStop(0, p.c); g.addColorStop(1, "rgba(255,200,80,0)"); cx.globalAlpha = a; cx.fillStyle = g; cx.beginPath(); cx.arc(0, 0, p.s * 4, 0, 6.28); cx.fill(); cx.fillStyle = "#fff8d6"; cx.beginPath(); cx.arc(0, 0, p.s * .6, 0, 6.28); cx.fill(); }
+      else if (p.k === "star") { cx.globalAlpha = .25 + .75 * Math.abs(Math.sin(tm / 900 * p.sp + p.ph)); var s = p.s * 2.2; cx.beginPath(); cx.moveTo(0, -s); cx.quadraticCurveTo(0, 0, s, 0); cx.quadraticCurveTo(0, 0, 0, s); cx.quadraticCurveTo(0, 0, -s, 0); cx.quadraticCurveTo(0, 0, 0, -s); cx.fill(); }
+      else { cx.globalAlpha = (t === "minimal" ? .22 : .55) * (.5 + .5 * Math.sin(tm / 1400 + p.ph)); cx.beginPath(); cx.arc(0, 0, p.s, 0, 6.28); cx.fill(); }
+      cx.restore();
+    }
+    var last = 0;
+    function frame(tm) {
+      var dt = Math.min(40, tm - last) / 16; last = tm; cx.clearRect(0, 0, W, H);
+      P.forEach(function (p) {
+        if (p.k === "petal" || p.k === "flower" || p.k === "leaf") { p.y += p.vy * dt; p.x += Math.sin(tm / 900 + p.ph) * p.sw * dt; p.r += p.vr * dt; if (p.y > H + 20) { p.y = -20; p.x = rnd(0, W); } }
+        else if (p.k === "spark") { p.y += p.vy * dt; p.x += Math.sin(tm / 700 + p.ph) * p.sw * dt; if (p.y < -10) { p.y = H + 10; p.x = rnd(0, W); } }
+        else if (p.k === "dust" || p.k === "firefly") { p.x += (p.vx + Math.sin(tm / 2000 + p.ph) * .15) * dt; p.y += (p.vy + Math.cos(tm / 2300 + p.ph) * .15) * dt; if (p.x < -10) p.x = W + 10; if (p.x > W + 10) p.x = -10; if (p.y < -10) p.y = H + 10; if (p.y > H + 10) p.y = -10; }
+        draw(p, tm);
+      });
+      if (FX[t].some(function (g) { return g[0] === "shoot"; })) {
+        nextShoot -= 16 * dt; if (!shoot && nextShoot < 0) { shoot = { x: rnd(W * .3, W), y: rnd(0, H * .4), l: 0 }; nextShoot = rnd(4000, 9000); }
+        if (shoot) { shoot.x -= 9 * dt; shoot.y += 4.5 * dt; shoot.l += dt; var gr = cx.createLinearGradient(shoot.x, shoot.y, shoot.x + 80, shoot.y - 40); gr.addColorStop(0, "rgba(255,255,255,.9)"); gr.addColorStop(1, "rgba(255,255,255,0)"); cx.strokeStyle = gr; cx.lineWidth = 1.6; cx.beginPath(); cx.moveTo(shoot.x, shoot.y); cx.lineTo(shoot.x + 80, shoot.y - 40); cx.stroke(); if (shoot.l > 60) shoot = null; }
+      }
+      requestAnimationFrame(frame);
+    }
+    size(); build(); requestAnimationFrame(frame);
+    window.addEventListener("resize", function () { size(); build(); });
+  })();
+  var target = new Date(D.date).getTime();
+  function tick() { var left = Math.max(0, target - Date.now()); [["d", 864e5], ["h", 36e5], ["m", 6e4], ["s", 1e3]].forEach(function (p) { var v = Math.floor(left / p[1]); left -= v * p[1]; $(p[0]).textContent = v; }); }
+  tick(); setInterval(tick, 1000);
+
+  var rv = [].slice.call(document.querySelectorAll(".rv"));
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove("hide"); io.unobserve(e.target); } }); }, { threshold: .1 });
+    rv.forEach(function (el) { if (el.getBoundingClientRect().top > innerHeight) { el.classList.add("hide"); io.observe(el); } });
+  }
+  function read() { try { return JSON.parse(localStorage.getItem("wishes-" + t) || "[]"); } catch (e) { return []; } }
+  function renderWishes() { var w = read(); if (!w.length) return; $("wishes").innerHTML = w.map(function (x) { return '<div class="wish"><b>' + esc(x.n) + '</b><br>' + esc(x.m) + '</div>'; }).join(""); }
+  renderWishes();
+  function summary() { var att = $("att").value === "accepts" ? "will attend" : "regretfully cannot attend"; return "Hello! This is " + $("gname").value.trim() + " (" + $("gphone").value.trim() + "). I " + att + " with " + $("cnt").value + " guest(s). " + $("msg").value.trim(); }
+  $("wa").addEventListener("click", function () { if (!$("gname").value.trim()) { $("gname").focus(); return; } this.href = "https://wa.me/" + RSVP_NUMBER + "?text=" + encodeURIComponent(summary()); });
+  $("rsvp").addEventListener("submit", function (e) {
+    e.preventDefault(); var m = $("msg").value.trim();
+    if (m) { var w = read(); w.unshift({ n: $("gname").value.trim(), m: m }); try { localStorage.setItem("wishes-" + t, JSON.stringify(w)); } catch (x) {} renderWishes(); }
+    $("rsvpNote").textContent = "Thank you, " + $("gname").value.trim() + ". Your RSVP is noted. Tap Send to WhatsApp so the couple receives it.";
+  });
+  // Gentle parallax on hero images
+  var pimgs = [].slice.call(document.querySelectorAll("header .phimg, .s-hero .phimg"));
+  if (pimgs.length && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) window.addEventListener("scroll", function () { var y = Math.min(scrollY, 600) * .06; pimgs.forEach(function (im) { im.style.transform = "scale(1.12) translateY(" + y + "px)"; }); }, { passive: true });
+  // Embedded previews (home page phones): skip the intro and glide down through the design
+  if (params.get("embed")) {
+    $("intro").style.display = "none"; rv.forEach(function (e) { e.classList.remove("hide"); });
+    if (!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+      var t0 = null, DUR = 30000;
+      var glide = function (ts) {
+        if (t0 === null) t0 = ts; var max = (document.documentElement.scrollHeight - innerHeight) * .62;
+        var ph = ((ts - t0) % DUR) / DUR, k = ph < .5 ? ph * 2 : (1 - ph) * 2, e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        window.scrollTo(0, max * Math.min(1, e * 1.15)); requestAnimationFrame(glide);
+      };
+      setTimeout(function () { requestAnimationFrame(glide); }, 1800);
+    }
+  }
+})();
+</script>
+</body>
+</html>
