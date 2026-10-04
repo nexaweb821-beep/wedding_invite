@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shubh Invite Reel Maker</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* Reel maker: a 1080x1920 canvas animation of the ad script, recorded to a video file in the browser. */
+:root { --ivory: #faf5ea; --maroon: #4d1122; --gold: #b08a3e; --ink: #2a1d14; --wa: #1f9d55; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #ece3d0; color: var(--ink); font-family: "Jost", system-ui, sans-serif; font-weight: 300; display: grid; justify-items: center; padding: 24px 16px 60px; }
+h1 { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: 38px; margin: 0 0 6px; text-align: center; }
+p.sub { margin: 0 0 18px; color: #7a6a52; text-align: center; max-width: 560px; }
+.stage { width: min(360px, 90vw); aspect-ratio: 9/16; box-shadow: 0 10px 40px #0005; background: #000; } canvas { width: 100%; height: 100%; display: block; }
+.bar { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 18px 0 8px; }
+button, a.dl { font: 500 13px "Jost", sans-serif; letter-spacing: .14em; text-transform: uppercase; padding: 14px 22px; border: 1px solid var(--maroon); background: var(--maroon); color: #fff; cursor: pointer; text-decoration: none; }
+button.alt { background: transparent; color: var(--maroon); } a.dl { background: var(--wa); border-color: var(--wa); display: none; }
+#msg { min-height: 24px; color: #7a6a52; font-size: 14px; text-align: center; max-width: 560px; }
+</style>
+</head>
+<body>
+<h1>Shubh Invite Reel Maker</h1>
+<p class="sub">A 25-second vertical reel (1080 x 1920) with music. Preview it, then record and download the video.</p>
+<div class="stage"><canvas id="cv" width="1080" height="1920"></canvas></div>
+<div class="bar"><button id="prev" class="alt">Preview with music</button><button id="rec">Record and download</button><a id="dl" class="dl" download="shubh-invite-reel">Download video</a></div>
+<div id="msg">Open this page from your website or a local server (not the file on your disk) so recording works.</div>
+
+<script>
+(function () {
+  var W = 1080, H = 1920, DUR = 25, cv = document.getElementById("cv"), g = cv.getContext("2d");
+  var SRC = { royal: "photos/royal-couple.svg", kerala: "photos/kerala-couple.svg", temple: "photos/temple-couple.svg", celestial: "photos/celestial-couple.svg", floral: "photos/floral-couple.svg" };
+  var IMG = {}, loaded = 0, keys = Object.keys(SRC);
+  keys.forEach(function (k) { var i = new Image(); i.onload = function () { loaded++; }; i.src = SRC[k]; IMG[k] = i; });
+  var SERIF = '"Cormorant Garamond", Georgia, serif', SANS = '"Jost", system-ui, sans-serif';
+
+  function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
+  function seg(t, a, b) { return clamp((t - a) / (b - a), 0, 1); }
+  function ease(x) { return x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+  function back(x) { var c = 1.70158; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }
+  function rnd(i) { var x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+  function rr(x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+  function text(s, x, y, size, color, o) {
+    o = o || {}; g.save(); g.globalAlpha = (o.a == null ? 1 : o.a); g.fillStyle = color; g.textAlign = o.align || "center"; g.textBaseline = "alphabetic";
+    g.font = (o.style || "") + " " + (o.weight || 500) + " " + size + "px " + (o.font || SERIF); if (o.ls) g.letterSpacing = o.ls + "px"; g.fillText(s, x, y); g.restore();
+  }
+  function cover(img, x, y, w, h) { var s = Math.max(w / img.width, h / img.height), dw = img.width * s, dh = img.height * s; g.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh); }
+  function grad(c1, c2) { var gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, c1); gr.addColorStop(1, c2); g.fillStyle = gr; g.fillRect(0, 0, W, H); }
+  function pattern(col, step) { g.save(); g.strokeStyle = col; g.lineWidth = 2; for (var y = 0; y < H + step; y += step) for (var x = 0; x < W + step; x += step) { g.beginPath(); g.arc(x, y, step * .32, 0, 6.28); g.stroke(); } g.restore(); }
+
+  // phone with a couple portrait, optional doors that open (open: 0 closed .. 1 open)
+  function phone(cx, cy, w, img, name, sub, o) {
+    o = o || {}; var h = w * 2.05, r = w * .14, bw = w * .035;
+    g.save(); g.translate(cx, cy); g.rotate((o.rot || 0) * Math.PI / 180); g.globalAlpha = o.a == null ? 1 : o.a;
+    g.shadowColor = "rgba(0,0,0,.55)"; g.shadowBlur = 60; g.shadowOffsetY = 30; rr(-w / 2, -h / 2, w, h, r); g.fillStyle = "#17110c"; g.fill(); g.shadowColor = "transparent";
+    g.save(); rr(-w / 2 + bw, -h / 2 + bw, w - 2 * bw, h - 2 * bw, r - bw); g.clip();
+    g.translate(-w / 2 + bw, -h / 2 + bw); var iw = w - 2 * bw, ih = h - 2 * bw;
+    cover(img, 0, 0, iw, ih); var sh = g.createLinearGradient(0, ih * .55, 0, ih); sh.addColorStop(0, "rgba(0,0,0,0)"); sh.addColorStop(1, "rgba(0,0,0,.7)"); g.fillStyle = sh; g.fillRect(0, 0, iw, ih);
+    text(name, iw / 2, ih - iw * .2, iw * .15, "#fff", { weight: 500 }); text(sub, iw / 2, ih - iw * .1, iw * .045, "#e3c177", { font: SANS, ls: 4 });
+    if (o.open != null && o.open < 1) { var d = o.open, pw = iw / 2; g.fillStyle = "#5d1124"; [[-d * pw, 0], [iw / 2 + d * pw, 0]].forEach(function (p) { g.save(); g.translate(p[0], 0); g.fillRect(0, 0, pw, ih); g.strokeStyle = "rgba(227,178,77,.35)"; g.lineWidth = 2; for (var yy = 0; yy < ih; yy += 54) for (var xx = 0; xx < pw; xx += 54) { g.beginPath(); g.arc(xx + 27, yy + 27, 17, 0, 6.28); g.stroke(); } g.restore(); });
+      g.fillStyle = "#e3b24d"; g.fillRect(iw / 2 - 3 - d * pw, 0, 3, ih); g.fillRect(iw / 2 + d * pw, 0, 3, ih);
+      g.save(); g.globalAlpha = 1 - clamp(d * 4, 0, 1); text("A & M", iw / 2, ih / 2, iw * .2, "#f6e7c1"); g.restore(); }
+    g.restore(); g.fillStyle = "#17110c"; rr(-w * .14, -h / 2 + bw * 1.6, w * .28, w * .075, w * .04); g.fill(); g.restore();
+  }
+  function sparks(t, x0, y0, w, h, n, col) { for (var i = 0; i < n; i++) { var sp = .08 + rnd(i) * .18, y = (y0 + h) - ((t * sp + rnd(i + 9)) % 1) * (h + 60), x = x0 + rnd(i + 3) * w + Math.sin(t * 2 + i) * 14, a = .4 + .6 * Math.abs(Math.sin(t * 3 + i)); g.save(); g.globalAlpha = a; var gr = g.createRadialGradient(x, y, 0, x, y, 16); gr.addColorStop(0, col); gr.addColorStop(1, "rgba(255,200,80,0)"); g.fillStyle = gr; g.beginPath(); g.arc(x, y, 16, 0, 6.28); g.fill(); g.restore(); } }
+  function fade(t, a, b) { return Math.min(seg(t, a, a + .4), 1 - seg(t, b - .4, b)); }
+
+  // ---------- scenes ----------
+  function s1(t) { // 0 - 3.4
+    var a = fade(t, -1, 3.4); grad("#1b0a10", "#3a0a18"); g.save(); g.globalAlpha = a;
+    var k = ease(seg(t, .1, .8)); text("Still sending", W / 2, 420 + (1 - k) * 40, 150, "#fbf1d8", { a: k }); text("PDF invites?", W / 2, 590 + (1 - k) * 40, 170, "#e3c177", { a: k, style: "italic" });
+    var sx = ease(seg(t, 1.5, 2.6)) * 1300; g.save(); g.translate(540 + sx, 1220); g.rotate((-4 + sx / 120) * Math.PI / 180); g.shadowColor = "rgba(0,0,0,.5)"; g.shadowBlur = 40; rr(-250, -330, 500, 660, 20); g.fillStyle = "#fff"; g.fill(); g.shadowColor = "transparent";
+    g.fillStyle = "#d9d9d9"; for (var i = 0; i < 9; i++) g.fillRect(-190, -240 + i * 52, i % 3 === 2 ? 220 : 380, 20); g.fillStyle = "#d33"; rr(-190, -300, 120, 50, 10); g.fill(); text("PDF", -130, -262, 34, "#fff", { font: SANS }); g.restore(); g.restore();
+  }
+  function s2(t) { // 3.2 - 7.6
+    var a = fade(t, 3.2, 7.6), u = t - 3.2; grad("#66192f", "#3a0a18"); pattern("rgba(227,178,77,.12)", 70); g.save(); g.globalAlpha = a;
+    text("Tap. The gates open.", W / 2, 300, 128, "#e3c177", { style: "italic", a: ease(seg(u, .1, .7)) });
+    var open = ease(seg(t, 4.8, 5.9)); phone(540, 1130, 560, IMG.royal, "Aarav & Meera", "SHUBH VIVAH", { open: open });
+    if (t > 4.2 && t < 4.9) { var r = (t - 4.2) / .7; g.save(); g.strokeStyle = "rgba(255,255,255," + (1 - r) + ")"; g.lineWidth = 8; g.beginPath(); g.arc(540, 1130, 40 + r * 120, 0, 6.28); g.stroke(); g.restore(); }
+    if (t > 5.4) sparks(t, 280, 700, 520, 860, 38, "#ffd36a"); g.restore();
+  }
+  function s3(t) { // 7.4 - 11.6
+    var a = fade(t, 7.4, 11.6), u = t - 7.4; grad("#f3e0b8", "#fbf1dc"); g.save(); g.globalAlpha = a;
+    text("Rajasthani · Temple · Kerala", W / 2, 260, 84, "#8a1c1c", { a: ease(seg(u, .1, .7)) });
+    var L = [[IMG.kerala, "Adithya & Devika", "KERALA", 260, -7, .5, .9], [IMG.temple, "Arjun & Kavya", "TEMPLE", 820, 7, .8, .9], [IMG.royal, "Aarav & Meera", "ROYAL", 540, 0, .2, 1.18]];
+    L.forEach(function (p, i) { var k = back(seg(u, p[5], p[5] + .8)); phone(p[3], 1180 + (1 - k) * 900, 400 * p[6], p[0], p[1], p[2], { rot: p[4] }); });
+    text("Made for Indian weddings", W / 2, 1760, 60, "#6b4a2a", { a: ease(seg(u, 1.6, 2.2)) }); g.restore();
+  }
+  function s4(t) { // 11.4 - 15.6
+    var a = fade(t, 11.4, 15.6), u = t - 11.4; grad("#faf5ea", "#f1e7d2"); g.save(); g.globalAlpha = a;
+    text("Everything in one link", W / 2, 230, 100, "#4d1122", { a: ease(seg(u, .1, .7)) });
+    function card(y, k, title, sub) { var e = ease(seg(u, k, k + .6)); g.save(); g.translate((1 - e) * 1200, 0); g.shadowColor = "rgba(0,0,0,.18)"; g.shadowBlur = 30; rr(110, y, 860, 360, 24); g.fillStyle = "#fff"; g.fill(); g.shadowColor = "transparent"; g.strokeStyle = "#b08a3e"; g.lineWidth = 3; rr(110, y, 860, 360, 24); g.stroke();
+      text(title, 160, y + 90, 64, "#4d1122", { align: "left" }); text(sub, 160, y + 140, 34, "#7a6a52", { align: "left", font: SANS, weight: 300 }); return y; }
+    var y = card(380, .2, "Live countdown", "Days, hours and minutes to the wedding"); var vals = [62, 19, 53, Math.max(0, 59 - Math.floor(u * 7) % 60)], labs = ["DAYS", "HOURS", "MINS", "SECS"];
+    for (var i = 0; i < 4; i++) { var e = ease(seg(u, .2, .8)); g.save(); g.translate((1 - e) * 1200, 0); rr(160 + i * 200, y + 190, 170, 130, 14); g.strokeStyle = "#b08a3e"; g.lineWidth = 2; g.stroke(); text(String(vals[i]), 245 + i * 200, y + 262, 64, "#4d1122"); text(labs[i], 245 + i * 200, y + 302, 22, "#7a6a52", { font: SANS, ls: 3 }); g.restore(); }
+    y = card(790, .7, "Venue maps", "One tap to every ceremony"); var e2 = ease(seg(u, .7, 1.3)); g.save(); g.translate((1 - e2) * 1200, 0); g.fillStyle = "#c0182f"; g.beginPath(); g.arc(540, y + 270, 46, Math.PI, 0); g.lineTo(540, y + 350); g.closePath(); g.fill(); g.fillStyle = "#fff"; g.beginPath(); g.arc(540, y + 262, 16, 0, 6.28); g.fill(); g.restore();
+    y = card(1200, 1.2, "Your song", "Music plays when the card opens"); var e3 = ease(seg(u, 1.2, 1.8)); g.save(); g.translate((1 - e3) * 1200, 0); g.fillStyle = "#b08a3e"; for (var j = 0; j < 22; j++) { var hh = 20 + 70 * Math.abs(Math.sin(u * 5 + j * .7)); g.fillRect(250 + j * 28, y + 300 - hh, 16, hh); } g.restore();
+    g.restore();
+  }
+  function s5(t) { // 15.4 - 19.6
+    var a = fade(t, 15.4, 19.6), u = t - 15.4; g.fillStyle = "#e5ddd5"; g.fillRect(0, 0, W, H); g.save(); g.globalAlpha = a;
+    g.fillStyle = "#075e54"; g.fillRect(0, 0, W, 360); text("RSVPs land on WhatsApp", W / 2, 215, 78, "#fff", { a: ease(seg(u, .1, .6)), font: SERIF });
+    function bub(y, k, who, msg, side) { var e = back(seg(u, k, k + .5)); if (e <= 0) return; g.save(); g.translate(side ? 0 : 0, (1 - e) * 60); g.globalAlpha = a * clamp(e, 0, 1); var w = 800, x = side ? W - w - 70 : 70; rr(x, y, w, 200, 30); g.fillStyle = side ? "#dcf8c6" : "#fff"; g.shadowColor = "rgba(0,0,0,.12)"; g.shadowBlur = 14; g.fill(); g.shadowColor = "transparent";
+      text(who, x + 36, y + 62, 34, "#0b8f6f", { align: "left", font: SANS, weight: 500 }); text(msg, x + 36, y + 130, 42, "#222", { align: "left", font: SANS, weight: 400 }); text("✓✓", x + w - 70, y + 176, 28, "#4fc3f7", { font: SANS }); g.restore(); }
+    bub(520, .6, "Priya Sharma", "I will attend with 3 guests 🎉", 0); bub(780, 1.4, "Rohit Mehta", "Congratulations! See you there 🙏", 0); bub(1040, 2.2, "Neha Kapoor", "Accepts with pleasure. 2 guests", 0);
+    text("No forms. No chasing. Just replies.", W / 2, 1500, 60, "#4d4d4d", { a: ease(seg(u, 2.8, 3.4)), font: SERIF, style: "italic" }); g.restore();
+  }
+  function s6(t) { // 19.4 - 25
+    var a = Math.min(seg(t, 19.4, 19.8), 1), u = t - 19.4; grad("#66192f", "#3a0a18"); pattern("rgba(227,178,77,.1)", 70); g.save(); g.globalAlpha = a;
+    text("8 designs · 24-hour delivery", W / 2, 360, 62, "#e6d6b0", { font: SANS, weight: 300, ls: 3, a: ease(seg(u, .1, .6)) });
+    var k = back(seg(u, .3, 1.1)); g.save(); g.translate(W / 2, 800); g.scale(clamp(k, 0, 1.1), clamp(k, 0, 1.1)); text("₹699", 0, 0, 380, "#e3c177", { weight: 600 }); g.restore();
+    var sk = seg(u, 1.2, 1.7); text("₹999", W / 2 - 40, 990, 100, "#fbf1d8", { a: .7, align: "right" }); g.strokeStyle = "#fbf1d8"; g.lineWidth = 7; g.beginPath(); g.moveTo(W / 2 - 330, 960); g.lineTo(W / 2 - 330 + 290 * sk, 960); g.stroke();
+    var b = back(seg(u, 1.6, 2.2)); g.save(); g.translate(W / 2 + 190, 955); g.scale(clamp(b, 0, 1.1), clamp(b, 0, 1.1)); rr(-170, -60, 340, 110, 10); g.fillStyle = "#e3c177"; g.fill(); text("30% OFF", 0, 22, 62, "#4d1122", { font: SANS, weight: 500, ls: 3 }); g.restore();
+    var c = ease(seg(u, 2.4, 3)), pul = 1 + .03 * Math.sin(u * 6); g.save(); g.translate(W / 2, 1400); g.scale(pul * c, pul * c); rr(-380, -80, 760, 160, 14); g.fillStyle = "#1f9d55"; g.fill();
+    g.fillStyle = "#fff"; g.beginPath(); g.arc(-280, 0, 40, 0, 6.28); g.fill(); g.fillStyle = "#1f9d55"; g.beginPath(); g.arc(-280, -2, 22, 0, 6.28); g.fill(); text("Order on WhatsApp", 60, 22, 56, "#fff", { font: SANS, weight: 500, ls: 2 }); g.restore();
+    text("+91 80781 58179", W / 2, 1640, 70, "#fbf1d8", { font: SANS, weight: 400, ls: 4, a: ease(seg(u, 3, 3.6)) });
+    text("Shubh Invite", W / 2, 1790, 90, "#e3c177", { style: "italic", a: ease(seg(u, 3.2, 3.8)) }); g.restore();
+  }
+  function frame(t) { g.clearRect(0, 0, W, H); g.fillStyle = "#000"; g.fillRect(0, 0, W, H); if (t < 3.4) s1(t); if (t >= 3.2 && t < 7.6) s2(t); if (t >= 7.4 && t < 11.6) s3(t); if (t >= 11.4 && t < 15.6) s4(t); if (t >= 15.4 && t < 19.6) s5(t); if (t >= 19.4) s6(t); }
+  window.__frame = frame;
+
+  // ---------- music (generated) ----------
+  var actx, bus, dest, timer, nextT, idx = 2, SC = [0, 2, 4, 7, 9];
+  function startMusic(forRecord) {
+    var AC = window.AudioContext || window.webkitAudioContext; actx = new AC(); bus = actx.createGain(); bus.gain.value = 0; bus.gain.linearRampToValueAtTime(.9, actx.currentTime + 1);
+    bus.gain.setValueAtTime(.9, actx.currentTime + DUR - 1.6); bus.gain.linearRampToValueAtTime(0, actx.currentTime + DUR); bus.connect(actx.destination);
+    var dl = actx.createDelay(1), fb = actx.createGain(), wet = actx.createGain(); dl.delayTime.value = .33; fb.gain.value = .35; wet.gain.value = .4; bus.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(actx.destination);
+    if (forRecord) { dest = actx.createMediaStreamDestination(); bus.connect(dest); wet.connect(dest); }
+    [[73.4, "sine", .06], [110, "triangle", .03]].forEach(function (d) { var o = actx.createOscillator(), gn = actx.createGain(); o.type = d[1]; o.frequency.value = d[0]; gn.gain.value = d[2]; o.connect(gn); gn.connect(bus); o.start(); o.stop(actx.currentTime + DUR + .2); });
+    nextT = actx.currentTime + .1;
+    function note(f, when, dur, vol) { var o = actx.createOscillator(), gn = actx.createGain(), fl = actx.createBiquadFilter(); o.type = "triangle"; o.frequency.value = f; fl.type = "lowpass"; fl.frequency.value = 3000; gn.gain.setValueAtTime(0, when); gn.gain.linearRampToValueAtTime(vol, when + .01); gn.gain.exponentialRampToValueAtTime(.0008, when + dur); o.connect(fl); fl.connect(gn); gn.connect(bus); o.start(when); o.stop(when + dur + .05); }
+    var end = actx.currentTime + DUR;
+    timer = setInterval(function () { while (nextT < actx.currentTime + .5 && nextT < end) { if (Math.random() > .18) { idx = clamp(idx + [-2, -1, -1, 0, 1, 1, 2][Math.floor(Math.random() * 7)], 0, 4); var f = 146.8 * Math.pow(2, (SC[idx] + 12 * (Math.random() > .5 ? 1 : 2)) / 12); note(f, nextT, 1.4, .16); } nextT += .5; } if (actx.currentTime > end) clearInterval(timer); }, 150);
+  }
+  function stopMusic() { clearInterval(timer); try { actx.close(); } catch (e) {} }
+
+  // ---------- run ----------
+  var msg = document.getElementById("msg"), running = false;
+  function ready() { return loaded === keys.length && document.fonts && document.fonts.status; }
+  function play(record) {
+    if (running) return; if (loaded < keys.length) { msg.textContent = "Loading images, try again in a second."; return; }
+    running = true; var chunks = [], mr = null, t0;
+    var go = function () {
+      t0 = performance.now(); startMusic(record);
+      if (record) {
+        var vs = cv.captureStream(30), tracks = vs.getTracks().concat(dest.stream.getAudioTracks()), st = new MediaStream(tracks), mime = ["video/mp4;codecs=avc1.42E01E,mp4a.40.2", "video/mp4", "video/webm;codecs=vp9,opus", "video/webm"].filter(function (m) { return window.MediaRecorder && MediaRecorder.isTypeSupported(m); })[0];
+        try { mr = new MediaRecorder(st, { mimeType: mime, videoBitsPerSecond: 8e6 }); } catch (e) { msg.textContent = "Recording is not supported in this browser. Use the Chrome browser."; running = false; stopMusic(); return; }
+        mr.ondataavailable = function (e) { if (e.data.size) chunks.push(e.data); };
+        mr.onstop = function () { var ext = /mp4/.test(mime) ? "mp4" : "webm", blob = new Blob(chunks, { type: mime }), a = document.getElementById("dl"); a.href = URL.createObjectURL(blob); a.download = "shubh-invite-reel." + ext; a.style.display = "inline-block"; msg.textContent = "Done. Click Download video (" + ext.toUpperCase() + ", " + (blob.size / 1048576).toFixed(1) + " MB)." + (ext === "webm" ? " Instagram needs MP4: convert it free at cloudconvert.com or in the Clips app." : ""); };
+        mr.start(250);
+      }
+      var finished = false, iv;
+      function tick() { if (finished) return; var t = (performance.now() - t0) / 1000; frame(Math.min(t, DUR)); if (record) msg.textContent = "Recording... " + Math.min(25, Math.floor(t)) + " / " + DUR + " s. Keep this tab open and visible.";
+        if (t >= DUR + .3) { finished = true; clearInterval(iv); running = false; stopMusic(); if (mr && mr.state !== "inactive") mr.stop(); if (!record) msg.textContent = "Preview finished."; } }
+      (function loop() { if (finished) return; tick(); requestAnimationFrame(loop); })(); iv = setInterval(tick, 100);
+    };
+    (document.fonts ? Promise.all([document.fonts.load('italic 500 100px "Cormorant Garamond"'), document.fonts.load('500 40px "Jost"'), document.fonts.load('300 40px "Jost"'), document.fonts.load('400 40px "Jost"')]) : Promise.resolve()).then(go);
+  }
+  document.getElementById("prev").onclick = function () { play(false); };
+  document.getElementById("rec").onclick = function () { play(true); };
+  var tries = 0; (function show() { if (loaded === keys.length || tries++ > 40) frame(5.5); else setTimeout(show, 100); })();
+})();
+</script>
+</body>
+</html>
