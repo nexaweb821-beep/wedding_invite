@@ -28,6 +28,7 @@
 [data-theme="kerala"] { --paper: #fbf7ea; --paper2: #f1e8cf; --ink: #1f3a2b; --muted: #6b7a5e; --gold: #bf9b3f; --btn: #1f5a3a; --btnfg: #fff; --outer: #dfd6b8; --field: rgba(255,255,255,.65); --serif: "Cormorant Garamond", Georgia, serif; --pattern: none; }
 [data-theme="cathedral"] { --paper: #0b1530; --paper2: #14244a; --ink: #f6eed6; --muted: #bdb8a3; --gold: #e0b85c; --btn: #e0b85c; --btnfg: #1a1305; --outer: #060b1c; --field: rgba(255,255,255,.07); --serif: "Cormorant Garamond", Georgia, serif; --pattern: none; --cinzel: "Cinzel", Georgia, serif; }
 [data-theme="grace"] { --paper: #fbfaf6; --paper2: #eaf1f9; --ink: #243047; --muted: #6c7a92; --gold: #b8943f; --btn: #2f4f86; --btnfg: #fff; --outer: #dfe8f2; --field: rgba(255,255,255,.75); --serif: "Cormorant Garamond", Georgia, serif; --pattern: none; --cinzel: "Cinzel", Georgia, serif; }
+[data-theme="divine"] { --paper: #1c0c2e; --paper2: #2c1649; --ink: #fbf1d8; --muted: #cbbd9f; --gold: #f3d27a; --btn: #f3d27a; --btnfg: #2a1245; --outer: #0d0618; --field: rgba(255,255,255,.08); --serif: "Cormorant Garamond", Georgia, serif; --pattern: none; --cinzel: "Cinzel", Georgia, serif; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--outer); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.6; }
@@ -46,7 +47,7 @@ html.embed .back, html.embed .order, html.embed #mute { display: none !important
 .order { position: fixed; z-index: 60; bottom: 16px; left: 12px; background: #1faa59; color: #fff; padding: 12px 18px; border-radius: 28px; font-weight: 500; font-size: 14px; text-decoration: none; box-shadow: 0 4px 16px #0004; }
 a.btn, button.btn, .btn { font: inherit; font-weight: 500; letter-spacing: .12em; font-size: 13px; text-transform: uppercase; border: 1px solid var(--btn); padding: 14px 18px; cursor: pointer; background: var(--btn); color: var(--btnfg); text-decoration: none; display: block; text-align: center; }
 .btn.alt { background: transparent; color: var(--btn); }
-[data-theme="royal"] .btn.alt, [data-theme="starry"] .btn.alt, [data-theme="celestial"] .btn.alt, [data-theme="cathedral"] .btn.alt { color: var(--gold); border-color: var(--gold); }
+[data-theme="royal"] .btn.alt, [data-theme="starry"] .btn.alt, [data-theme="celestial"] .btn.alt, [data-theme="cathedral"] .btn.alt, [data-theme="divine"] .btn.alt { color: var(--gold); border-color: var(--gold); }
 .btn:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 form { display: grid; gap: 16px; text-align: left; }
 label { display: grid; gap: 6px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
@@ -340,6 +341,26 @@ html.embed .cust, html.embed #fx { display: none !important; }
 .gr-ev { border-radius: 30px; padding: 30px 22px; margin-bottom: 18px; background: linear-gradient(#fff, #eef4fa); box-shadow: 0 10px 30px #2f4f8622, inset 0 0 0 1px #b8943f44; } .gr-ev .cross { color: var(--gold); font-size: 22px; } .gr-ev h3 { font-size: 30px; font-style: italic; color: var(--btn); margin: 4px 0; } .gr-ev .time { font-family: var(--cinzel); letter-spacing: .18em; color: var(--gold); font-size: 14px; } .gr-ev p { color: var(--muted); font-size: 14px; margin: 8px 0 14px; }
 [data-theme="grace"] .masonry > div { border-radius: 16px; box-shadow: 0 6px 18px #2f4f8633; }
 .gr-foot { text-align: center; padding: 48px 24px 110px; background: linear-gradient(#fbfaf6, #cfe4f8); } .gr-foot svg { width: 100px; } .gr-foot .names { font-family: "Great Vibes", cursive; font-size: 54px; color: var(--btn); line-height: 1.1; }
+/* ============ DIVINE : imperial purple and gold, radiant halo, Christ illustration, scripture ============ */
+#intro.dv-intro .stage { background: radial-gradient(circle at 50% 44%, #4a2a7a, #1c0c2e 70%); display: grid; place-content: center; justify-items: center; text-align: center; }
+.dv-burst { position: absolute; inset: -30%; background: repeating-conic-gradient(from 0deg at 50% 44%, #ffe9a899 0 3deg, transparent 3deg 9deg); opacity: .0; transform: scale(.2); transition: transform 2.4s cubic-bezier(.3,.6,.2,1), opacity 1.6s; mask-image: radial-gradient(circle at 50% 44%, #000, transparent 70%); -webkit-mask-image: radial-gradient(circle at 50% 44%, #000, transparent 70%); }
+.dv-glow { position: absolute; left: 50%; top: 44%; width: 240px; height: 240px; margin: -120px 0 0 -120px; border-radius: 50%; background: radial-gradient(circle, #ffe9a8aa, #ffe9a800 70%); animation: pulse 3s infinite; }
+.dv-mid { position: relative; z-index: 3; transition: opacity .6s; } .dv-mid .cross { font-size: 64px; color: var(--gold); text-shadow: 0 0 30px #f3d27a; line-height: 1; } .dv-mid .cin { font-family: var(--cinzel); letter-spacing: .3em; font-size: 11px; color: var(--gold); margin: 16px 0 8px; } .dv-mid .mono { font-family: var(--serif); font-size: 58px; font-style: italic; line-height: 1; } .dv-mid .mono i { color: var(--gold); font-size: .5em; padding-inline: 8px; } .dv-mid .tap { margin-top: 20px; font-size: 11px; letter-spacing: .26em; color: var(--muted); animation: pulse 2s infinite; }
+#intro.open .dv-burst { opacity: 1; transform: scale(2.6); } #intro.open .dv-mid, #intro.open .dv-glow { opacity: 0; }
+[data-theme="divine"] #intro { transition: opacity 1s 1.8s, visibility 0s 2.8s; }
+[data-theme="divine"] .app { background: radial-gradient(90% 34% at 50% 0%, #d9a24a44, transparent), var(--paper); }
+[data-theme="divine"] h2 { font-family: var(--cinzel); font-weight: 500; font-size: 21px; letter-spacing: .14em; text-transform: uppercase; }
+[data-theme="divine"] section { border-top: 1px solid #f3d27a33; }
+.dv-hero { text-align: center; padding: 54px 24px 44px; position: relative; overflow: hidden; }
+.dv-hero::before { content: ""; position: absolute; left: -30%; right: -30%; top: -10%; height: 70%; background: repeating-conic-gradient(from -50deg at 50% 36%, #ffe9a826 0 3deg, transparent 3deg 9deg); mask-image: linear-gradient(#000, transparent); -webkit-mask-image: linear-gradient(#000, transparent); pointer-events: none; }
+.dv-hero > * { position: relative; } .dv-hero .cin { font-family: var(--cinzel); letter-spacing: .4em; font-size: 12px; color: var(--gold); margin-bottom: 8px; }
+.dv-hero h1 { font-size: clamp(54px, 15vw, 78px); font-style: italic; line-height: .98; margin: 22px 0 10px; } .dv-hero h1 span { display: block; font-family: var(--cinzel); font-style: normal; font-size: .24em; letter-spacing: .4em; margin: 10px 0; }
+.dv-hero .arch-o { margin-top: 0; width: 80%; box-shadow: 0 0 50px #f3d27a44; }
+.dv-verse { padding: 58px 28px; text-align: center; } .dv-verse .cross { font-size: 34px; color: var(--gold); text-shadow: 0 0 20px #f3d27a; } .dv-verse p { font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.45; max-width: 360px; margin: 14px auto 8px; } .dv-verse small { font-family: var(--cinzel); letter-spacing: .26em; font-size: 11px; color: var(--gold); }
+.dv-count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 24px; } .dv-count div { aspect-ratio: 1; border-radius: 50%; display: grid; place-content: center; border: 1px solid #f3d27a99; background: radial-gradient(circle, #f3d27a22, transparent 70%); box-shadow: 0 0 24px #f3d27a33; } .dv-count b { font-family: var(--serif); font-size: 28px; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; } .dv-count span { font-family: var(--cinzel); font-size: 8px; letter-spacing: .16em; color: var(--muted); }
+.dv-ev { border: 1px solid #f3d27a88; border-radius: 22px; padding: 30px 22px; margin-bottom: 18px; background: linear-gradient(#f3d27a18, transparent); box-shadow: 0 0 30px #f3d27a22; } .dv-ev .cross { color: var(--gold); font-size: 24px; text-shadow: 0 0 14px #f3d27a; } .dv-ev h3 { font-size: 30px; font-style: italic; margin: 6px 0 4px; } .dv-ev .time { font-family: var(--cinzel); letter-spacing: .2em; color: var(--gold); font-size: 14px; } .dv-ev p { color: var(--muted); font-size: 14px; margin: 8px 0 14px; }
+[data-theme="divine"] .masonry > div { border: 1px solid #f3d27a99; border-radius: 14px; box-shadow: 0 0 20px #f3d27a22; }
+.dv-foot { text-align: center; padding: 56px 24px 110px; background: linear-gradient(transparent, #0d0618); } .dv-foot .cross { font-size: 44px; color: var(--gold); text-shadow: 0 0 26px #f3d27a; }
 @media (prefers-reduced-motion: no-preference) { .rv.hide { opacity: 0; transform: translateY(18px); } .rv { transition: opacity .8s, transform .8s; } }
 @media (prefers-reduced-motion: reduce) { .door, .twinkle { transition-duration: .01s; animation: none !important; } }
 #mute { position: fixed; right: max(12px, calc(50% - 228px)); bottom: 16px; z-index: 40; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--gold); background: var(--paper); color: var(--gold); font-size: 18px; cursor: pointer; display: none; } #mute.on { display: block; }
@@ -355,7 +376,7 @@ html.embed .cust, html.embed #fx { display: none !important; }
 (function () {
   var ORDER_NUMBER = "918078158179";   // Orders go to this WhatsApp number
   var RSVP_NUMBER = "918078158179";    // Demo only: replace with the couple's number when delivering
-  var THEMES = { floral: "White Floral Elegance", royal: "Royal Rajasthani", starry: "Celestial Starry Serenade", minimal: "Modern Minimal", seal: "Classic Royal Seal", temple: "Temple Gopuram", celestial: "Celestial Envelope", kerala: "Kerala Kasavu", cathedral: "Cathedral Light", grace: "Heavenly Grace" };
+  var THEMES = { floral: "White Floral Elegance", royal: "Royal Rajasthani", starry: "Celestial Starry Serenade", minimal: "Modern Minimal", seal: "Classic Royal Seal", temple: "Temple Gopuram", celestial: "Celestial Envelope", kerala: "Kerala Kasavu", cathedral: "Cathedral Light", grace: "Heavenly Grace", divine: "Divine Light" };
   var params = new URLSearchParams(location.search);
   var t = params.get("t") || "floral"; if (!THEMES[t]) t = "floral";
   document.documentElement.setAttribute("data-theme", t);
@@ -432,6 +453,14 @@ html.embed .cust, html.embed #fx { display: none !important; }
     D.verse = "Two are better than one. A cord of three strands is not quickly broken."; D.verseRef = "ECCLESIASTES 4:9, 12";
     D.story = [["2020", "First hello", "A church youth retreat where two friends began a long conversation."], ["2022", "Growing in faith", "Prayer, laughter and Sunday lunches with both our families."], ["2026", "The engagement", "By the sea at sunset, with a promise made in love and faith."], ["2027", "Holy Matrimony", "Today we begin a new chapter, blessed by God."]];
     D.events = [["Holy Matrimony", "Saturday, 6 February 2027", "11:00 AM", "Church of Holy Grace", "Goa", "A nuptial Mass with family and friends."], ["Wedding Reception", "Saturday, 6 February 2027", "6:30 PM", "Seaside Garden", "Goa", "Dinner, music and dancing by the sea."]];
+  }
+  if (t === "divine") {
+    D.groom = "Joshua Thomas"; D.bride = "Esther Samuel"; D.gi = "J"; D.bi = "E";
+    D.gp = "Son of Mr. Thomas Abraham and Mrs. Susan Thomas"; D.bp = "Daughter of Mr. Samuel David and Mrs. Ruth Samuel";
+    D.date = "2027-03-13T11:00:00+05:30"; D.dateText = "Saturday, 13 March 2027"; D.city = "Chennai, Tamil Nadu"; D.rsvpBy = "27 February 2027";
+    D.verse = "What God has joined together, let no one separate."; D.verseRef = "MATTHEW 19:6";
+    D.story = [["2018", "A prayer meeting", "Two friends met at a youth prayer meeting and began to pray together."], ["2021", "Growing in Christ", "Bible study, service and a friendship grounded in faith."], ["2026", "The proposal", "Kneeling in the church garden, Joshua asked and Esther said yes."], ["2027", "Holy Matrimony", "We commit our lives to each other, with Christ at the centre."]];
+    D.events = [["Holy Matrimony", "Saturday, 13 March 2027", "11:00 AM", "St. Thomas Church", "Chennai, Tamil Nadu", "The exchange of vows and the nuptial blessing."], ["Wedding Reception", "Saturday, 13 March 2027", "6:30 PM", "Grace Convention Hall", "Chennai, Tamil Nadu", "Dinner, music and an evening of thanksgiving."]];
   }
   var G = D.groom.split(" ")[0], B = D.bride.split(" ")[0];
   function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
@@ -565,7 +594,7 @@ html.embed .cust, html.embed #fx { display: none !important; }
     h += rsvp("Your presence is a blessing", "Guest RSVP");
     h += '<footer class="k-foot"><div class="kas"></div><div class="in"><div class="k-lampg">❂</div><div class="eyebrow">Thank you &middot; <span class="ml">നന്ദി</span></div><h2>' + G + ' &amp; ' + B + '</h2><p class="lead">With the blessings of the Almighty and our elders, we cannot wait to celebrate with you.</p></div></footer>';
   }
-  if (t === "cathedral" || t === "grace") {
+  if (t === "cathedral" || t === "grace" || t === "divine") {
     var DOVE = function (c) { return '<svg class="dv" viewBox="-120 -100 200 130" aria-hidden="true"><g fill="' + c + '" stroke="#d6cfb8" stroke-width="1.5"><path d="M-8 -4C-30 -64 -72 -92 -108 -78C-82 -58 -62 -28 -34 0Z" opacity=".8"/><ellipse cx="0" cy="2" rx="36" ry="14"/><circle cx="40" cy="-6" r="10"/><path d="M48 -6l16 4-16 5z" fill="#d9a441" stroke="none"/><path d="M-34 0L-74 -8L-64 6L-76 18L-34 12Z"/><path d="M-4 -2C-22 -52 -52 -76 -84 -70C-62 -50 -48 -22 -26 6Z"/></g></svg>'; };
     var Q = function (txt, ref, cls) { return '<section class="rv ' + cls + '"><div class="cross">✝</div><p>&ldquo;' + txt + '&rdquo;</p><small>' + ref + '</small></section>'; };
     var fam = '<section class="rv"><div class="eyebrow">Two families, joined in faith</div><h2>With the blessings of God</h2><div class="people"><div class="person"><div class="badge">' + D.gi + '</div><div class="eyebrow">The groom</div><h3>' + esc(D.groom) + '</h3><small>' + esc(D.gp) + '</small></div><div class="person"><div class="badge">' + D.bi + '</div><div class="eyebrow">The bride</div><h3>' + esc(D.bride) + '</h3><small>' + esc(D.bp) + '</small></div></div></section>';
@@ -579,6 +608,13 @@ html.embed .cust, html.embed #fx { display: none !important; }
       h += '<section class="rv"><div class="eyebrow">Join the celebration</div><h2>Counting the days</h2><div class="big-date">' + D.dateText + '</div>' + count("cd-count") + '</section>';
       h += evs("cd-ev", "The celebration") + gal + rsvp("Your presence is a blessing", "Guest RSVP");
       h += '<footer class="cd-foot"><div class="cross">✝</div><div class="eyebrow" style="margin-top:8px">May God bless you</div><h2>' + G + ' &amp; ' + B + '</h2><p class="lead">With joy and gratitude, we invite you to celebrate our union before God and our loved ones.</p></footer>';
+    } else if (t === "divine") {
+      h += '<div id="intro" class="dv-intro" role="button" tabindex="0" aria-label="Tap to receive the blessing and open the invitation"><div class="stage"><div class="dv-burst"></div><div class="dv-glow"></div><div class="dv-mid"><div class="cross">\u271D</div><div class="cin">THE LIGHT OF THE WORLD</div><div class="mono">' + D.gi + '<i>&amp;</i>' + D.bi + '</div><div class="tap">TAP TO RECEIVE THE BLESSING</div></div></div></div>';
+      h += '<header class="dv-hero"><div class="cin">HOLY MATRIMONY</div><div class="arch-o"><div class="arch-i"><img class="phimg" src="photos/christ.jpg" alt="" onerror="this.onerror=null;this.src=\'photos/divine-couple.svg\'"></div></div><h1 class="foil">' + G + '<span>&amp;</span>' + B + '</h1><p class="lead">' + D.dateText + ' &middot; ' + D.city + '</p></header>';
+      h += Q(D.verse, D.verseRef, "dv-verse") + fam + story;
+      h += '<section class="rv"><div class="eyebrow">Join the celebration</div><h2>Counting the days</h2><div class="big-date">' + D.dateText + '</div>' + count("dv-count") + '</section>';
+      h += evs("dv-ev", "The celebration") + gal + rsvp("Your presence is a blessing", "Guest RSVP");
+      h += '<footer class="dv-foot"><div class="cross">\u271D</div><div class="eyebrow" style="margin-top:8px">Praise the Lord</div><h2>' + G + ' &amp; ' + B + '</h2><p class="lead">The Lord bless you and keep you. We cannot wait to celebrate with you.</p></footer>';
     } else {
       h += '<div id="intro" class="gr-intro" role="button" tabindex="0" aria-label="Tap to open the invitation"><div class="stage"><div class="gr-rays"></div><div class="gr-cloud t"></div><div class="gr-cloud b"></div><div class="gr-cloud m"></div><div class="gr-dove">' + DOVE("#ffffff") + '</div><div class="gr-mid"><div class="cin">HOLY MATRIMONY</div><div class="mono">' + D.gi + ' &amp; ' + D.bi + '</div><div class="tap">TAP TO OPEN</div></div></div></div>';
       h += '<header class="gr-hero"><div class="rays2"></div>' + DOVE("#ffffff") + '<div class="cin">HOLY MATRIMONY</div><div class="names">' + G + '<span>and</span>' + B + '</div><p class="lead">' + D.dateText + ' &middot; ' + D.city + '</p><div class="gr-med"><div>' + img("couple") + '</div></div></header>';
@@ -644,6 +680,7 @@ html.embed .cust, html.embed #fx { display: none !important; }
     seal:      { root: 261.63, sc: [0, 2, 4, 5, 7, 9, 11], wave: "triangle", step: .5, drone: 0, oct: [0, 1], rest: .15, cut: 3600, len: 1.6, vol: .45 },
     cathedral: { root: 130.81, sc: [0, 2, 4, 7, 9], wave: "sawtooth", step: 2.2, drone: 1, oct: [1, 2], rest: .25, cut: 700, len: 6, vol: .3, pad: 1 },
     grace:     { root: 392, sc: [0, 2, 4, 7, 9], wave: "triangle", step: .55, drone: 0, oct: [0, 1], rest: .2, cut: 4200, len: 3.2, vol: .5 },
+    divine:    { root: 146.83, sc: [0, 2, 4, 7, 9], wave: "sine", step: 1.8, drone: 1, oct: [0, 1, 2], rest: .25, cut: 2400, len: 5, vol: .5, pad: 1 },
     minimal:   { root: 196, sc: [0, 2, 4, 7, 9], wave: "sine", step: .9, drone: 0, oct: [0, 1], rest: .4, cut: 3000, len: 2.4, vol: .5 }
   };
   var synth = (function () {
@@ -696,6 +733,7 @@ html.embed .cust, html.embed #fx { display: none !important; }
     seal:      [["dust", ["#b4903a", "#d8b765", "#ffffff"], 30], ["leaf", ["#8b9a73"], 5]],
     cathedral: [["spark", ["#ffd36a", "#fff1b8", "#f3b24a"], 26], ["dust", ["#e8c878"], 18]],
     grace:     [["petal", ["#ffffff", "#f7f2e2", "#e3ecf7"], 18], ["dust", ["#d9b45a"], 10]],
+    divine:    [["spark", ["#ffe08a", "#fff7d0"], 30], ["dust", ["#fff1b8"], 16]],
     minimal:   [["dust", ["#1d1d1b"], 26]]
   };
   (function () {
